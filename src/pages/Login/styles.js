@@ -27,7 +27,7 @@ export const Label = styled.div`
     font-weight: 500;
 `
 
-export const Form = styled.div`
+export const Form = styled.form`
     width: 100%;
 `
 export const Links = styled.div`

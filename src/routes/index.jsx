@@ -7,6 +7,7 @@ import Error from "../pages/Error";
 import Imobi from "../pages/Imobi";
 import Cadastro from "../pages/Cadastro";
 import Login from "../pages/Login";
+import Perfil from "../pages/Perfil";
 
 const RouterApp = () => {
   return (
@@ -17,6 +18,7 @@ const RouterApp = () => {
         <Route path="/imovel" element={<Imobi />} />
         <Route path="/login" element={<Login />} />
         <Route path="/cadastro" element={<Cadastro />} />
+        <Route path="/perfil" element={<Perfil />} />
         <Route path="*" element={<Error />} />
       </Routes>
       <Footer />
