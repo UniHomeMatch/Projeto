@@ -8,6 +8,11 @@ import Imobi from "../pages/Imobi";
 import Cadastro from "../pages/Cadastro";
 import Login from "../pages/Login";
 import Perfil from "../pages/Perfil";
+import PoliticaPrivacidade from "../pages/PoliticaPrivacidade";
+import PoliticaCookies from "../pages/PoliticaPrivacidade/cookies";
+import PoliticaUso from "../pages/PoliticaPrivacidade/uso";
+
+// Rotas da Aplicação
 
 const RouterApp = () => {
   return (
@@ -20,6 +25,9 @@ const RouterApp = () => {
         <Route path="/cadastro" element={<Cadastro />} />
         <Route path="/perfil" element={<Perfil />} />
         <Route path="*" element={<Error />} />
+        <Route path="/politica-privacidade" element={<PoliticaPrivacidade />} />
+        <Route path="/politica-privacidade/cookies" element={<PoliticaCookies />} />
+        <Route path="/politica-privacidade/uso" element={<PoliticaUso />} />
       </Routes>
       <Footer />
     </BrowserRouter>

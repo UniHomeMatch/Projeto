@@ -28,6 +28,7 @@ export const Item = styled.div`
         li{
             span{
                 margin-right: 15px;
+                
             }
         }
     }
@@ -45,6 +46,9 @@ export const Copy = styled.div`
         li{
             span{
                 margin-left: 15px;
+                a{
+                    color: var(--tercery);
+                }
             }
         }
     }

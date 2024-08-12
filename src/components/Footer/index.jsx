@@ -44,9 +44,9 @@ const Footer = () => {
             <Copy>
                 <p>© Copyright 2024 - UniHomeMatch Todos os Direitos Reservados.</p>
                 <ul>
-                    <li><span>Termos de Uso</span></li>
-                    <li><span>Política de Privacidade</span></li>
-                    <li><span>Política de Cookies</span></li>
+                    <li><span><a href="/politica-privacidade/uso"> Termos de Uso </a></span></li>
+                    <li><span><a href="/politica-privacidade"> Política de Privacidade </a></span></li>
+                    <li><span><a href="/politica-privacidade/cookies"> Política de Cookies </a></span></li>
                 </ul>
             </Copy>
         </Fragment>

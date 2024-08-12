@@ -30,8 +30,8 @@ export const AppContextProvider = ({ children }) => {
                 SetLocalStorage(payload);
                 window.location.href = '/perfil';
 
-            }).catch(() => {
-                console.log('Erro ao fazer login')
+            }).catch((response) => {
+                toast(response.response.data.message);
             })
     }
 

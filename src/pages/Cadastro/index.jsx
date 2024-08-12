@@ -23,8 +23,14 @@ const Cadastro = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     api.post('/createusers', data)
+
+    // Verifica se o nome é válido
+    // Verifica se o E-mail já está cadastrado
+    // Verifica se o CPF já está cadastrado
     .then((response) => {
-      if (!response.data.error === true) {
+      if (data.name === '' || data.cpf === '' || data.birthdate === '' || data.generoId === '' || data.email === '' || data.password === '') {
+        toast('Preencha todos os campos!');
+      }else if (!response.data.error === true) {
         toast(response.data.message);
       }else{
         toast(response.data.message);
