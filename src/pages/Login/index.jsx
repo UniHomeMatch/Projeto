@@ -30,7 +30,7 @@ const Login = () => {
             <Label>Senha</Label>
             <Input type="password" name="password" placeholder="Digite sua Senha" onChange={(e) => setPassword(e.target.value)}/>
             <Links>
-            Ainda não possuís conta? <a href="/cadastro">Entre já!</a>
+            Ainda não possui conta? <a href="/cadastro">Entre já!</a>
             </Links>
             <Button type="submit">Login</Button>
         </Form>

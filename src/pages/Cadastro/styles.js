@@ -2,7 +2,7 @@ import ReactInputMask from "react-input-mask";
 import styled from "styled-components";
 
 export const Container = styled.div`
-    padding: 100px 150px;
+    padding: 60px 150px;
     display: flex;
     justify-content: center;
     align-items: center;
