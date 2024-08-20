@@ -1,13 +1,23 @@
-import React, {Fragment} from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Header, Wrapper } from "./styles";
 import Card from "../../components/Card";
 import Banner from "../../components/Banner";
+import api from "../../services/Api";
 
-const Home  = () => {
-    let Cards = [];
-    for(let i = 0; i<4; i++) {
-        Cards.push(<Card key={i} />)
-    }
+const Home = () => {
+
+    const [imobi, setImobi] = useState([]);
+
+    useEffect(() => {
+        api.get('/listimobi')
+        .then((response) => {
+            setImobi(response.data)
+        })
+        .catch(() => {
+            console.log('Erro ao buscar os imóveis')
+        })
+    }, [])
+
     return (
         <Fragment>
             <Banner />
@@ -15,7 +25,15 @@ const Home  = () => {
                 <h2>Encontre o seu espaço dos sonhos!</h2>
             </Header>
             <Wrapper>
-                {Cards}
+                {imobi.map((items) => (
+                    <Card key={items.id} 
+                    thumb={items.thumb}
+                    title={items.title}
+                    location={items.location}
+                    price={items.price}
+                    slug={items.slug} />
+                ))}
+                <Card />
             </Wrapper>
         </Fragment>
     )
