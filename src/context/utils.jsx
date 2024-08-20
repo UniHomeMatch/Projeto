@@ -1,13 +1,12 @@
 export function SetLocalStorage(user) {
-    localStorage.setItem('login', JSON.stringify(user));
-}
-
-export function GetLocalStorage() {
-    const json = localStorage.getItem('login');
+    localStorage.setItem('Yt', JSON.stringify(user));
+  }
+  
+  export function GetLocalStorage() {
+    const json = localStorage.getItem('Yt');
     if (!json) {
-        return null;
+      return null;
     }
-
     const user = JSON.parse(json);
     return user ?? null;
-}
+  }
