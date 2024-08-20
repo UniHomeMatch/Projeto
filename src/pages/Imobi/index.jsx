@@ -14,7 +14,6 @@ import Button from '../../components/Button';
 
 
 
-
 const Imobi = () => {
     return (
         <Fragment>
