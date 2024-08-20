@@ -9,15 +9,16 @@ import { GetLocalStorage } from "../../context/utils";
 const Perfil = () => {
 
   const [thumb, setThumb] = useState('');
-  const [tipo, setTipo] = useState('');
-  const [endereco, setEndereco] = useState('');
-  const [cidade, setCidade] = useState('');
-  const [uf, setUf] = useState('');
-  const [valor, setValor] = useState('');
-  const [descricao, setDescricao] = useState('');
+  const [tittle, setTittle] = useState('');
+  const [description, setDescription] = useState('');
+  const [price, setPrice] = useState('');
+  const [location, setLocation] = useState('');
+  const [area, setArea] = useState('');
+  const [bedrooms, setBedrooms] = useState('');
+  const [bathrooms, setBathrooms] = useState('');
   const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
-  const [telefone, setTelefone] = useState('');
 
   const [message, setMessage] = useState([]);
 
@@ -27,15 +28,16 @@ const Perfil = () => {
   const data = {
     id,
     thumb,
-    tipo,
-    endereco,
-    cidade,
-    uf,
-    valor,
-    descricao,
+    tittle,
+    description,
+    price,
+    location,
+    area,
+    bedrooms,
+    bathrooms,
     name,
+    phone,
     email,
-    telefone,
   }
 
   useEffect(() => {
@@ -91,33 +93,45 @@ const Perfil = () => {
         />
         <Input
           type="text"
-          name="tipo"
-          placeholder="Informe o tipo do imóvel:"
-          onChange={(e) => setTipo(e.target.value)}
+          name="title"
+          placeholder="Informe o título do anúncio:"
+          onChange={(e) => setTittle(e.target.value)}
         />
         <Input
           type="text"
-          name="endereco"
+          name="location"
           placeholder="Informe o endereço do imóvel:"
-          onChange={(e) => setEndereco(e.target.value)}
+          onChange={(e) => setLocation(e.target.value)}
         />
         <Input
           type="text"
-          name="cidade"
-          placeholder="Informe a cidade do imóvel:"
-          onChange={(e) => setCidade(e.target.value)}
+          name="price"
+          placeholder="Informe o valor do imóvel:"
+          onChange={(e) => setPrice(e.target.value)}
         />
         <Input
           type="text"
-          name="uf"
-          placeholder="UF:"
-          onChange={(e) => setUf(e.target.value)}
+          name="area"
+          placeholder="Metragem do imóvel:"
+          onChange={(e) => setArea(e.target.value)}
         />
         <Input
           type="text"
-          name="descrição"
+          name="bedrooms"
+          placeholder="Informe a quantidade de quartos:"
+          onChange={(e) => setBedrooms(e.target.value)}
+        />
+        <Input
+          type="text"
+          name="bathrooms"
+          placeholder="Informe a quantidade de banheiros:"
+          onChange={(e) => setBathrooms(e.target.value)}
+        />
+        <Input
+          type="text"
+          name="description"
           placeholder="Descrição do imóvel:"
-          onChange={(e) => setDescricao(e.target.value)}
+          onChange={(e) => setDescription(e.target.value)}
         />
         <Input
           type="text"
@@ -127,21 +141,15 @@ const Perfil = () => {
         />
         <Input
           type="text"
+          name="phone"
+          placeholder="Informe o telefone de contato:"
+          onChange={(e) => setPhone(e.target.value)}
+        />
+        <Input
+          type="text"
           name="email"
-          placeholder="Informe seu e-mail:"
+          placeholder="Informe o E-mail para contato:"
           onChange={(e) => setEmail(e.target.value)}
-        />
-        <Input
-          type="text"
-          name="valor"
-          placeholder="Informe a valor do imóvel Ex: 500,00:"
-          onChange={(e) => setValor(e.target.value)}
-        />
-        <Input
-          type="text"
-          name="telefone"
-          placeholder="Informe o telefone de contato Ex: (99) 9 9999-9999:"
-          onChange={(e) => setTelefone(e.target.value)}
         />
         <Button type="submit">Cadastrar imóvel</Button>
       </Form>

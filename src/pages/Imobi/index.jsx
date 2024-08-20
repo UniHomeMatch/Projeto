@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { Container, Description, Left, MapImg, Profile, ProfileContact, ProfileDescription, ProfileFormContact, ProfileImg, Right, Thumb } from './styles';
-import TopBanner from '../../components/TopBanner/inex';
+import TopBanner from '../../components/TopBanner';
 import { IoBedSharp } from 'react-icons/io5';
 import { FaBath, FaMapMarkerAlt } from 'react-icons/fa';
 import { ImEnlarge } from 'react-icons/im';
@@ -45,14 +45,16 @@ const Imobi = () => {
         userId
     } = dataimobi;
 
-    const [client_name, setClinteName] = useState('');
-    const [client_email, setClinteEmail] = useState('');
-    const [client_mensagem, setClinteMensagem] = useState('');
+    const [client_name, setClientName] = useState('');
+    const [client_email, setClientEmail] = useState('');
+    const [client_mensagem, setClientMensagem] = useState('');
+    const [client_telefone, setClientTelefone] = useState('');
 
     const dataMessage = {
         client_name,
         client_email,
         client_mensagem,
+        client_telefone,
         userId
     }
 
@@ -109,11 +111,12 @@ const Imobi = () => {
                     </ProfileContact>
                     <ProfileFormContact>
                         <h3>Envie uma mensagem</h3>
-                        <form>
-                            <Input type="text" placeholder='Nome' />
-                            <Input type="text" placeholder='Email' />
-                            <Input type="text" placeholder='Telefone' />
-                            <TextArea name='' id='' cols="30" rows="10" placeholder='Mensagem' />
+                        <form onSubmit={handleSubmit} autoComplete='off'>
+                            <Input type="hidden" name='userId' value={userId} />
+                            <Input type="text" placeholder='Nome' name='client_name' onChange={(e) => setClientName(e.target.value)} />
+                            <Input type="text" placeholder='Email' name='client_email' onChange={(e) => setClientEmail(e.target.value)} />
+                            <Input type="text" placeholder='Telefone' name='client_telefone' onChange={(e) => setClientTelefone(e.target.value)} />
+                            <TextArea name='client_mensagem' id='' cols="30" rows="10" placeholder='Mensagem' onChange={(e) => setClientMensagem(e.target.value)} />
                             <Button>Enviar Mensagem</Button>
                         </form>
                     </ProfileFormContact>
