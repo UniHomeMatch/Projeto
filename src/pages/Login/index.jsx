@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import { Container, ContainerForm, Form, Label, Links } from "./styles";
