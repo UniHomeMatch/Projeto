@@ -25,29 +25,24 @@ const Footer = () => {
                     </ul>
                 </Item>
                 <Item>
-                    <h3>Nossos Serviços</h3>
+                    <h3>Termos de Uso</h3>
                     <ul>
-                        <li><span>Comprar</span></li>
-                        <li><span>Alugar</span></li>
-                        <li><span>Vender</span></li>
+                    <li><span><a href="/politica-privacidade/uso"> Termos de Uso </a></span></li>
+                    <li><span><a href="/politica-privacidade"> Política de Privacidade </a></span></li>
+                    <li><span><a href="/politica-privacidade"> Legal </a></span></li>
                     </ul>
                 </Item>
                 <Item>
-                    <h3>Nossos Serviços</h3>
+                    <h3>Contato</h3>
                     <ul>
-                        <li><span>Comprar</span></li>
-                        <li><span>Alugar</span></li>
-                        <li><span>Vender</span></li>
+                        <li><span>contato@unihomematch.com</span></li>
+                        <li><span>Londrina Paraná</span></li>
                     </ul>
                 </Item>
             </Container>
             <Copy>
                 <p>© Copyright 2024 - UniHomeMatch Todos os Direitos Reservados.</p>
-                <ul>
-                    <li><span><a href="/politica-privacidade/uso"> Termos de Uso </a></span></li>
-                    <li><span><a href="/politica-privacidade"> Política de Privacidade </a></span></li>
-                    <li><span><a href="/politica-privacidade/cookies"> Política de Cookies </a></span></li>
-                </ul>
+                
             </Copy>
         </Fragment>
     )
