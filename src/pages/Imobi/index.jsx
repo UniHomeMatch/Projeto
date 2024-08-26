@@ -13,22 +13,20 @@ import api, { urlApi } from '../../services/Api';
 import { useParams } from 'react-router-dom';
 import { FaMapLocationDot } from 'react-icons/fa6';
 
-
-
-
 const Imobi = () => {
     const { slug } = useParams();
-    const [dataimobi, setDataImobi] = useState([]);
+    const [dataImobi, setDataImobi] = useState({});
 
     useEffect(() => {
         api.get(`/listimobi/${slug}`)
             .then((response) => {
-                setDataImobi(response.data)
+                console.log(response.data); // Verifique a estrutura dos dados aqui
+                setDataImobi(response.data);
             })
             .catch(() => {
-                console.log("Erro: Erro ao listar imóvel")
-            })
-    }, [])
+                console.log("Erro: Erro ao listar imóvel");
+            });
+    }, [slug]);
 
     const {
         title,
@@ -43,7 +41,7 @@ const Imobi = () => {
         phone,
         email,
         userId
-    } = dataimobi;
+    } = dataImobi;
 
     const [client_name, setClientName] = useState('');
     const [client_email, setClientEmail] = useState('');
@@ -62,26 +60,25 @@ const Imobi = () => {
         e.preventDefault();
         api.post('/createmessage', dataMessage)
             .then((response) => {
-                if (!response.data.error === true) {
-                    toast(response.data.message);
-                } else {
-                    toast(response.data.message);
-                }
+                toast(response.data.message);
             })
             .catch(() => {
-                console.log('Erro: Erro no sistema')
-            })
+                console.log('Erro: Erro no sistema');
+            });
     }
+
+    if (!dataImobi) {
+        return <div>Carregando...</div>;
+    }
+
     return (
         <Fragment>
-            <TopBanner 
-            thumb={thumb}
-            />
+            <TopBanner thumb={thumb} />
             <Container>
                 <Left>
                     <h2>{title}</h2>
                     <Thumb>
-                        <img src={`${urlApi}/uploads/${thumb}`} alt="" />
+                        <img src={`${urlApi}/uploads/${thumb}`} alt="Imóvel" />
                     </Thumb>
                     <ImageRoll />
                     <Description>
@@ -97,10 +94,10 @@ const Imobi = () => {
                     <h2>PROPRIETÁRIO</h2>
                     <Profile>
                         <ProfileImg>
-                            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="" />
+                            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="Perfil" />
                         </ProfileImg>
                         <ProfileDescription>
-                            <h3>{ name }</h3>
+                            <h3>{name}</h3>
                             <p>descrição</p>
                         </ProfileDescription>
                     </Profile>
@@ -116,13 +113,13 @@ const Imobi = () => {
                             <Input type="text" placeholder='Nome' name='client_name' onChange={(e) => setClientName(e.target.value)} />
                             <Input type="text" placeholder='Email' name='client_email' onChange={(e) => setClientEmail(e.target.value)} />
                             <Input type="text" placeholder='Telefone' name='client_telefone' onChange={(e) => setClientTelefone(e.target.value)} />
-                            <TextArea name='client_mensagem' id='' cols="30" rows="10" placeholder='Mensagem' onChange={(e) => setClientMensagem(e.target.value)} />
+                            <TextArea name='client_mensagem' cols="30" rows="10" placeholder='Mensagem' onChange={(e) => setClientMensagem(e.target.value)} />
                             <Button>Enviar Mensagem</Button>
                         </form>
                     </ProfileFormContact>
                     <MapImg>
-                        <h3><FaMapMarkerAlt /> Localizção</h3>
-                        <img src="https://media.istockphoto.com/id/1306807452/pt/vetorial/map-city-vector-illustration.jpg?s=2048x2048&w=is&k=20&c=e7J0DzlKVhJ6fpy2IqB7KE4yr2Dxg8cLBHe8F9_W3L8=" alt="" />
+                        <h3><FaMapMarkerAlt /> Localização</h3>
+                        <img src="https://media.istockphoto.com/id/1306807452/pt/vetorial/map-city-vector-illustration.jpg?s=2048x2048&w=is&k=20&c=e7J0DzlKVhJ6fpy2IqB7KE4yr2Dxg8cLBHe8F9_W3L8=" alt="Mapa" />
                     </MapImg>
                 </Right>
             </Container>

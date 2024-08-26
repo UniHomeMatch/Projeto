@@ -3,11 +3,13 @@ import Input from "../../components/Input";
 import Button from "../../components/Button";
 import { Container, ContainerForm, Form, Label, Links } from "./styles";
 import { AppAuth } from "../../context/AppAuth";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const Login = () => {
   const auth = AppAuth();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [recaptcha, setRecaptcha] = useState(null);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -34,10 +36,16 @@ const Login = () => {
             placeholder="Digite sua senha"
             onChange={(e) => setPassword(e.target.value)}
           />
+          <ReCAPTCHA
+            sitekey="6LcpxSwqAAAAAE2yAjZ5KlYY515HBcTQnfuETeQm"
+            onChange={(value) => setRecaptcha(value)}
+            size="normal"
+            theme="clear"
+            />
           <Links>
             Ainda não possui conta? <a href="/cadastro">Entre já!</a>
             </Links>
-          <Button type="submit">Login</Button>
+          <Button disable={!recaptcha} type="submit">Login</Button>
         </Form>
       </ContainerForm>
     </Container>

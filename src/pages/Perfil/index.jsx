@@ -9,7 +9,7 @@ import { GetLocalStorage } from "../../context/utils";
 const Perfil = () => {
 
   const [thumb, setThumb] = useState('');
-  const [tittle, setTittle] = useState('');
+  const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
   const [location, setLocation] = useState('');
@@ -28,7 +28,7 @@ const Perfil = () => {
   const data = {
     id,
     thumb,
-    tittle,
+    title,
     description,
     price,
     location,
@@ -75,13 +75,13 @@ const Perfil = () => {
     <Container>
     <Left>
       <h2>Minhas mensagens</h2>
-      {message.map((item, index) => (
+      {/* {message.map((item, index) => (
         <Message key={index}>
           <span>Nome: {item.client_name}</span>
           <span>Email: {item.client_email}</span>
           <p>{item.client_mensagem}</p>
         </Message>
-      ))}
+      ))} */}
     </Left>
     <Right>
       <h2>Cadastrar imóveis</h2>
@@ -95,7 +95,7 @@ const Perfil = () => {
           type="text"
           name="title"
           placeholder="Informe o título do anúncio:"
-          onChange={(e) => setTittle(e.target.value)}
+          onChange={(e) => setTitle(e.target.value)}
         />
         <Input
           type="text"

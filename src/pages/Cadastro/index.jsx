@@ -43,7 +43,6 @@ const Cadastro = () => {
           toast(response.response.data.message);
         }
       })
-    console.log(data);
   };
 
   return (
