@@ -3,6 +3,7 @@ import { Header, Wrapper } from "./styles";
 import Card from "../../components/Card";
 import Banner from "../../components/Banner";
 import api from "../../services/Api";
+import SearchBar from "../../components/SearchBar";
 
 const Home = () => {
 
@@ -23,6 +24,7 @@ const Home = () => {
             <Banner />
             <Header>
                 <h2>Encontre o seu espaço dos sonhos!</h2>
+                <SearchBar/>
             </Header>
             <Wrapper>
                 {imobi.map((items) => (
