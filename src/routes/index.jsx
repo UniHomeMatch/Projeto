@@ -12,16 +12,14 @@ import PoliticaPrivacidade from "../pages/PoliticaPrivacidade/Privacidade";
 import PoliticaUso from "../pages/PoliticaPrivacidade/Uso/uso";
 import PrivateRoute from "../components/PrivateRoute";
 
-
 // Rotas da Aplicação
-
 const RouterApp = () => { 
   return (
     <Router>
-    <Header />
+      <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/imovel" element={<Imobi />} />
+        <Route path="/imovel/:slug" element={<Imobi />} />
         <Route path="/login" element={<Login />} />
         <Route path="/cadastro" element={<Cadastro />} />
         <Route
