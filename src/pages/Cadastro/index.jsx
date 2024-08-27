@@ -5,12 +5,14 @@ import Button from '../../components/Button';
 import api from '../../services/Api';
 import { toast } from 'react-toastify';
 import { FormControlLabel, Radio, RadioGroup } from '@mui/material';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 
 
 
 
 const Cadastro = () => {
+  const [recaptcha, setRecaptcha] = useState(null);
   const [data, setData] = useState({
     name: '',
     cpf: '',
@@ -67,10 +69,16 @@ const Cadastro = () => {
           <Input type="text" name="email" id="email" placeholder="Digite seu Email" onChange={InputValue} autocomplete="off" required />
           <Label for="password">Senha</Label>
           <Input type="password" name="password" id="password" placeholder="Digite sua Senha" onChange={InputValue} autocomplete="off" required />
+          <ReCAPTCHA
+            sitekey="6LcpxSwqAAAAAE2yAjZ5KlYY515HBcTQnfuETeQm"
+            onChange={(value) => setRecaptcha(value)}
+            size="normal"
+            theme="clear"
+            />
           <Links>
             Já possui conta? <a href="/login">Faça Login</a>
           </Links>
-          <Button type="submit">Entrar</Button>
+          <Button disable={!recaptcha} type="submit">Entrar</Button>
         </Form>
       </ContainerForm>
     </Container>
