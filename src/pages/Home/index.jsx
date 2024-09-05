@@ -35,7 +35,6 @@ const Home = () => {
                     price={items.price}
                     slug={items.slug} />
                 ))}
-                <Card />
             </Wrapper>
         </Fragment>
     )
