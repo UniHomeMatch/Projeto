@@ -5,7 +5,7 @@ export const Header = styled.div`
     flex-direction: row;
     justify-content: space-between;
    align-items: center;
-   padding: 25px 150px;
+   padding: 25px 100px;
    gap: 25px;
 
    h2{

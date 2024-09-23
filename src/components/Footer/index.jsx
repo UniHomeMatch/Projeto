@@ -17,7 +17,7 @@ const Footer = () => {
                     </nav>
                 </Item>
                 <Item>
-                    <h3>Nossos Serviços</h3>
+                    <h4>Nossos Serviços</h4>
                     <ul>
                         <li><span>Comprar</span></li>
                         <li><span>Alugar</span></li>
@@ -25,7 +25,7 @@ const Footer = () => {
                     </ul>
                 </Item>
                 <Item>
-                    <h3>Termos de Uso</h3>
+                    <h4>Termos de Uso</h4>
                     <ul>
                     <li><span><a href="/politica-privacidade/uso"> Termos de Uso </a></span></li>
                     <li><span><a href="/politica-privacidade"> Política de Privacidade </a></span></li>
@@ -33,7 +33,7 @@ const Footer = () => {
                     </ul>
                 </Item>
                 <Item>
-                    <h3>Contato</h3>
+                    <h4>Contato</h4>
                     <ul>
                         <li><span>contato@unihomematch.com</span></li>
                         <li><span>Londrina Paraná</span></li>

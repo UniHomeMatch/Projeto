@@ -2,7 +2,7 @@ import ReactInputMask from "react-input-mask";
 import styled from "styled-components";
 
 export const Container = styled.div`
-    padding: 60px 150px;
+    padding: 40px 100px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -20,6 +20,9 @@ export const ContainerForm = styled.div`
     padding: 35px;
     width: 370px;
     background-color: var(--white);
+    border-radius: 25px;
+    box-shadow: 0px 0px 10px var(--orangelight);
+    
 `
 
 export const Label = styled.div`
@@ -30,7 +33,7 @@ export const Label = styled.div`
 
 export const Form = styled.form`
     width: 100%;
-
+    
 `
 
 export const Links = styled.div`
