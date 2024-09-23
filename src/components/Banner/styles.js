@@ -42,5 +42,9 @@ export const Text = styled.div`
         line-height: 24px;
         border-radius: 4px;
         cursor: pointer;
+
+        a{
+        color: var(--white);
+        }
     }
 `   

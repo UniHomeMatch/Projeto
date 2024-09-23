@@ -5,11 +5,13 @@ export const Container = styled.div`
     margin-bottom: 12px;
     background-color: var(--white);
     box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
 `
 
 export const Img = styled.div`
     width: 100%;
     img{
+    border-radius: 4px 4px 0 0;
         width: 100%;
         height: auto;
     }
