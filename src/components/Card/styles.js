@@ -10,10 +10,11 @@ export const Container = styled.div`
 
 export const Img = styled.div`
     width: 100%;
+    height: 150px;
     img{
     border-radius: 4px 4px 0 0;
         width: 100%;
-        height: auto;
+        height: 100%;
     }
 `
 
