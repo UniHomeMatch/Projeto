@@ -9,7 +9,7 @@ const Footer = () => {
             <Container>
                 <Item>
                     <img src={LogoImg} alt="" />
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolores ullam minima, laborum incidunt quia deserunt voluptates quod? Nihil itaque nobis asperiores accusamus voluptates a laborum, fuga sequi minus facere earum!</p>
+                    <p>Projeto de extensão da Universidade Filadélfia de Londrina - UNIFIL, desenvolvido por alunos de Ciência da Computação e Engenharia de Software.</p>
                     <nav>
                         <li><span><FaFacebook size={32} /></span></li>
                         <li><span><FaInstagram size={32} /></span></li>
