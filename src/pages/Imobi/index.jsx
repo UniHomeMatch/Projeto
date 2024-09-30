@@ -16,12 +16,16 @@ import { FaMapLocationDot } from 'react-icons/fa6';
 const Imobi = () => {
     const { slug } = useParams();
     const [dataImobi, setDataImobi] = useState({});
+    const [images, setImages] = useState([]); // Inicializar como um array vazio
 
     useEffect(() => {
         api.get(`/listimobi/${slug}`)
             .then((response) => {
-                console.log(response.data); // Verifique a estrutura dos dados aqui
+                console.log(response.data);
                 setDataImobi(response.data);
+
+                // Supondo que a resposta inclua um array de URLs de imagem
+                setImages(response.data.images || []); // Ajuste de acordo com a estrutura da resposta da sua API
             })
             .catch(() => {
                 console.log("Erro: Erro ao listar imóvel");
@@ -80,7 +84,7 @@ const Imobi = () => {
                     <Thumb>
                         <img src={`${urlApi}/uploads/${thumb}`} alt="Imóvel" />
                     </Thumb>
-                    <ImageRoll />
+                    <ImageRoll images={images} /> {/* Passa as imagens para o ImageRoll */}
                     <Description>
                         <h2>{price}</h2>
                         <span><IoBedSharp />{bedrooms}</span>

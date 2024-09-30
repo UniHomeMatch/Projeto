@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Form, Label, Right, Section } from "./Styles";
+import { Container, Form, Label, Right, Section, Mask } from "./Styles";
 import Input from "../../components/Input";
 import { GetLocalStorage } from "../../context/utils";
 import api from "../../services/Api";
@@ -95,7 +95,7 @@ function CadImovel() {
                         <Input
                             type="text"
                             name="title"
-                            placeholder="Informe o título do anúncio"
+                            placeholder="Informe o Prédio ou Condominio"
                             onChange={(e) => setTitle(e.target.value)}
                         />
                         <Label>Descrição do Imóvel:</Label>
@@ -116,28 +116,29 @@ function CadImovel() {
                         <Input
                             type="text"
                             name="price"
-                            placeholder="Informe o valor do imóvel"
+                            maxLength="3"
+                            placeholder="Informe a área total do imóvel"
                             onChange={(e) => setPrice(e.target.value)}
                         />
                         <Label>Quantidade de Quartos:</Label>
                         <Input
                             type="text"
                             name="price"
-                            placeholder="Informe o valor do imóvel"
+                            placeholder="Informe a quantidade de quartos"
                             onChange={(e) => setPrice(e.target.value)}
                         />
                         <Label>Quantidade de Banheiros:</Label>
                         <Input
                             type="text"
                             name="price"
-                            placeholder="Informe o valor do imóvel"
+                            placeholder="Informe a quantidade de banheiros"
                             onChange={(e) => setPrice(e.target.value)}
                         />
                         <Label>Gênero de Preferência:</Label>
                         <Input
                             type="text"
                             name="price"
-                            placeholder="Informe o valor do imóvel"
+                            placeholder="Informe o genero de preferência"
                             onChange={(e) => setPrice(e.target.value)}
                         />
                     </Section>
@@ -146,7 +147,8 @@ function CadImovel() {
                     <Section>
                         <h3>Endereço</h3>
                         <Label>CEP:</Label>
-                        <Input
+                        <Mask
+                        mask={"99999-999"}
                             type="text"
                             name="cep"
                             placeholder="Informe o CEP"
@@ -207,7 +209,8 @@ function CadImovel() {
                             onChange={(e) => setName(e.target.value)}
                         />
                         <Label>Telefone:</Label>
-                        <Input
+                        <Mask
+                        mask={"(99) 99999-9999"}
                             type="text"
                             name="phone"
                             placeholder="Informe o telefone de contato"

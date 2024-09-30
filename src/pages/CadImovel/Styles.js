@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import ReactInputMask from "react-input-mask";
 
 export const Container = styled.div`
   padding: 20px 100px;
@@ -82,4 +83,19 @@ export const Button = styled.button`
   &:hover {
     background-color: var(--dark-orange);
   }
+`;
+
+export const Mask = styled(ReactInputMask)`
+    height: 50px;
+    padding: 8px 15px;
+    border-radius: 5px;
+    width: 100%;
+    color: var(--secondary);
+    letter-spacing: 1px;
+    font-size: 15px;
+    margin-bottom: 10px;
+    outline: none;
+    border-color: var(--gray);
+    border: 1px solid var(--gray);
+    resize: none;
 `;
