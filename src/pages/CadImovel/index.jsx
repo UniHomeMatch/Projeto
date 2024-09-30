@@ -5,11 +5,13 @@ import { GetLocalStorage } from "../../context/utils";
 import api from "../../services/Api";
 import { toast } from "react-toastify";
 import Button from "../../components/Button";
+import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
 
 function CadImovel() {
 
     const [thumb, setThumb] = useState('');
-    const [title, setTitle] = useState('');
+    const [images, setImages] = useState('');
+    const [predio, setPredio] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
     const [cep, setCep] = useState('');
@@ -25,11 +27,14 @@ function CadImovel() {
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const [email, setEmail] = useState('');
+    const [generoId, setGenero] = useState('');
 
-    const user = GetLocalStorage();
+    const InputValue = (e) => setGenero({ ...data, generoId: e.target.value });
+
     const data = {
         thumb,
-        title,
+        images,
+        predio,
         description,
         price,
         cep,
@@ -45,6 +50,7 @@ function CadImovel() {
         name,
         phone,
         email,
+        generoId,
     };
 
     const handleSubmit = (e) => {
@@ -66,7 +72,7 @@ function CadImovel() {
 
     return (
         <Container>
-            Cadastre seu ánuncio agr!
+            Cadastre seu ánuncio agora!
             <Right>
                 <Form onSubmit={handleSubmit} autoComplete="off">
 
@@ -83,8 +89,8 @@ function CadImovel() {
                         <Input
                             type="file"
                             multiple
-                            name="thumb"
-                            onChange={(e) => setThumb(e.target.files[0])}
+                            name="images"
+                            onChange={(e) => setImages(e.target.files[0])}
                         />
                     </Section>
 
@@ -94,9 +100,9 @@ function CadImovel() {
                         <Label>Nome do Prédio:</Label>
                         <Input
                             type="text"
-                            name="title"
+                            name="predio"
                             placeholder="Informe o Prédio ou Condominio"
-                            onChange={(e) => setTitle(e.target.value)}
+                            onChange={(e) => setPredio(e.target.value)}
                         />
                         <Label>Descrição do Imóvel:</Label>
                         <Input
@@ -115,32 +121,31 @@ function CadImovel() {
                         <Label>Área:</Label>
                         <Input
                             type="text"
-                            name="price"
+                            name="area"
                             maxLength="3"
                             placeholder="Informe a área total do imóvel"
-                            onChange={(e) => setPrice(e.target.value)}
+                            onChange={(e) => setArea(e.target.value)}
                         />
                         <Label>Quantidade de Quartos:</Label>
                         <Input
                             type="text"
-                            name="price"
+                            name="bedrooms"
                             placeholder="Informe a quantidade de quartos"
-                            onChange={(e) => setPrice(e.target.value)}
+                            onChange={(e) => setBedrooms(e.target.value)}
                         />
                         <Label>Quantidade de Banheiros:</Label>
                         <Input
                             type="text"
-                            name="price"
+                            name="bathrooms"
                             placeholder="Informe a quantidade de banheiros"
-                            onChange={(e) => setPrice(e.target.value)}
+                            onChange={(e) => setBathrooms(e.target.value)}
                         />
                         <Label>Gênero de Preferência:</Label>
-                        <Input
-                            type="text"
-                            name="price"
-                            placeholder="Informe o genero de preferência"
-                            onChange={(e) => setPrice(e.target.value)}
-                        />
+                        <RadioGroup name="generoId" onChange={InputValue} required style={{ marginBottom: 10 }}>
+                            <FormControlLabel value="1" control={<Radio />} label="Masculino" />
+                            <FormControlLabel value="2" control={<Radio />} label="Feminino" />
+                            <FormControlLabel value="3" control={<Radio />} label="Outros" />
+                        </RadioGroup>
                     </Section>
 
                     {/* Seção de Endereço */}
@@ -148,7 +153,7 @@ function CadImovel() {
                         <h3>Endereço</h3>
                         <Label>CEP:</Label>
                         <Mask
-                        mask={"99999-999"}
+                            mask={"99999-999"}
                             type="text"
                             name="cep"
                             placeholder="Informe o CEP"
@@ -210,7 +215,7 @@ function CadImovel() {
                         />
                         <Label>Telefone:</Label>
                         <Mask
-                        mask={"(99) 99999-9999"}
+                            mask={"(99) 99999-9999"}
                             type="text"
                             name="phone"
                             placeholder="Informe o telefone de contato"
