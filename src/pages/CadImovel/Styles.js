@@ -61,6 +61,13 @@ export const Section = styled.div`
       box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
     }
   }
+
+  div{
+  gap: 2px;
+  display: flex;
+  align-items: start;
+  justify-content: start;
+  }
 `;
 
 export const Label = styled.label`
