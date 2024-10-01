@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-    padding: 200px 150px;
+    padding: 100px 100px;
     position: relative;
     background-size: cover;
     background-position: center;
@@ -42,5 +42,9 @@ export const Text = styled.div`
         line-height: 24px;
         border-radius: 4px;
         cursor: pointer;
+
+        a{
+        color: var(--white);
+        }
     }
 `   

@@ -5,7 +5,7 @@ export const Header = styled.div`
     flex-direction: row;
     justify-content: space-between;
    align-items: center;
-   padding: 25px 150px;
+   padding: 25px 100px;
    gap: 25px;
 
    h2{
@@ -18,5 +18,5 @@ export const Wrapper = styled.div`
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    padding: 25px 150px;
+    padding: 25px 100px;
 `
