@@ -10,7 +10,7 @@ import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
 function CadImovel() {
 
     const [thumb, setThumb] = useState('');
-    const [images, setImages] = useState('');
+    const [images, setImages] = useState([]);
     const [predio, setPredio] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
@@ -54,21 +54,47 @@ function CadImovel() {
     };
 
     const handleSubmit = (e) => {
-        e.preventDefault();
-        const headers = {
-            'headers': {
-                'content-type': 'multipart/form-data'
-            }
-        }
+        e.preventDefault(); // Evita o comportamento padrão do formulário
 
-        api.post('/createimobi', data, headers)
+        const formData = new FormData(); // Cria uma nova instância de FormData
+
+        // Adiciona os arquivos ao FormData
+        formData.append('thumb', thumb);
+        images.forEach((image) => {
+            formData.append('images', image);
+        });
+
+        // Adiciona os outros dados ao FormData
+        formData.append('predio', predio);
+        formData.append('description', description);
+        formData.append('price', price);
+        formData.append('cep', cep);
+        formData.append('logradouro', logradouro);
+        formData.append('complemento', complemento);
+        formData.append('bairro', bairro);
+        formData.append('numero', numero);
+        formData.append('cidade', cidade);
+        formData.append('uf', uf);
+        formData.append('area', area);
+        formData.append('bedrooms', bedrooms);
+        formData.append('bathrooms', bathrooms);
+        formData.append('name', name);
+        formData.append('phone', phone);
+        formData.append('email', email);
+        formData.append('generoId', generoId);
+
+        api.post('/createimobi', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
             .then((response) => {
                 toast(response.data.message);
             })
-            .catch(() => {
-                console.log("Erro: Erro ao cadastrar imóvel")
+            .catch((error) => {
+                console.log(error.response.data.error);
             });
-    }
+    };
 
     return (
         <Container>
@@ -90,8 +116,13 @@ function CadImovel() {
                             type="file"
                             multiple
                             name="images"
-                            onChange={(e) => setImages(e.target.files[0])}
+                            onChange={(e) => {
+                                if (e.target.files) {
+                                    setImages(Array.from(e.target.files)); 
+                                }
+                            }}
                         />
+
                     </Section>
 
                     {/* Seção de Descrições */}
@@ -142,11 +173,11 @@ function CadImovel() {
                         />
                         <Label>Gênero de Preferência:</Label>
                         <div>
-                        <RadioGroup name="generoId" onChange={InputValue} required style={{ marginBottom: 10 }}>
-                            <FormControlLabel value="1" control={<Radio />} label="Masculino" />
-                            <FormControlLabel value="2" control={<Radio />} label="Feminino" />
-                            <FormControlLabel value="3" control={<Radio />} label="Todos" />
-                        </RadioGroup>
+                            <RadioGroup name="generoId" onChange={InputValue} required style={{ marginBottom: 10 }}>
+                                <FormControlLabel value="1" control={<Radio />} label="Masculino" />
+                                <FormControlLabel value="2" control={<Radio />} label="Feminino" />
+                                <FormControlLabel value="3" control={<Radio />} label="Todos" />
+                            </RadioGroup>
                         </div>
                     </Section>
 
