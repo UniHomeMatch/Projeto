@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Container, Form, Label, Right, Section, Mask } from "./Styles";
-import Input from "../../components/Input";
-import { GetLocalStorage } from "../../context/utils";
+import Input from "../../components/Input"; 
 import api from "../../services/Api";
 import { toast } from "react-toastify";
 import Button from "../../components/Button";
@@ -65,8 +64,8 @@ function CadImovel() {
             .then((response) => {
                 toast(response.data.message);
             })
-            .catch(() => {
-                console.log("Erro: Erro ao cadastrar imóvel")
+            .catch((response) => {
+                console.log(response.response.data.message);
             });
     }
 
