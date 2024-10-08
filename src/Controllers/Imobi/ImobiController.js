@@ -95,22 +95,33 @@ export default {
         }
     },
 
-    async deleteImobi(request, response){
+    async deleteImobi(request, response) {
+        const { id } = request.params;
+        const userId = request.user.id; 
+    
         try {
-            const { id } = request.params;
-            
-            const imobi = await prisma.imobi.findUnique({ where: { id: Number(id) } });
-
+            const imobi = await prisma.imobi.findUnique({
+                where: { id: Number(id) }
+            });
+    
             if (!imobi) {
-                return response.status(404).json({ message: "Imóvel não encontrado." });
+                return response.status(404).json({ message: "Anúncio não encontrado!" });
             }
 
-            await prisma.imobi.delete({ where: { id: Number(id) } });
+            if (imobi.userId !== userId) {
+                return response.status(403).json({ message: "Você não tem permissão para deletar este anúncio." });
+            }
 
-            return response.json({ message: "Imóvel deletado com sucesso." });
+            await prisma.imobi.delete({
+                where: { id: Number(id) }
+            });
+    
+            return response.json({ message: "Anúncio deletado com sucesso!" });
+    
         } catch (error) {
             return response.status(500).json({ message: error.message });
         }
     }
+    
 }
 
