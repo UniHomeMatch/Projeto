@@ -29,42 +29,41 @@ function CadImovel() {
     const [email, setEmail] = useState('');
     const [generoId, setGenero] = useState('');
 
-    const InputValue = (e) => setGenero({ ...data, generoId: e.target.value });
+    const InputValue = (e) => setGenero(e.target.value);
 
-    const data = {
-        thumb,
-        images,
-        predio,
-        description,
-        price,
-        cep,
-        logradouro,
-        numero,
-        bairro,
-        complemento,
-        cidade,
-        uf,
-        area,
-        bedrooms,
-        bathrooms,
-        name,
-        phone,
-        email,
-        generoId,
+    const checkCep = (cepValue) => {
+        const cleanedCep = cepValue.replace(/\D/g, '');
+        if (cleanedCep.length === 8) {
+            fetch(`https://viacep.com.br/ws/${cleanedCep}/json/`)
+                .then((res) => res.json())
+                .then((data) => {
+                    if (!data.erro) {
+                        setLogradouro(data.logradouro);
+                        setCidade(data.localidade);
+                        setUf(data.uf);
+                        setBairro(data.bairro);
+                    } else {
+                        toast.error("CEP não encontrado.");
+                    }
+                })
+                .catch((error) => {
+                    console.error("Erro ao buscar o CEP:", error);
+                    toast.error("Erro ao buscar o CEP.");
+                });
+        } else {
+            toast.error("CEP inválido.");
+        }
     };
 
     const handleSubmit = (e) => {
-        e.preventDefault(); // Evita o comportamento padrão do formulário
+        e.preventDefault();
 
-        const formData = new FormData(); // Cria uma nova instância de FormData
-
-        // Adiciona os arquivos ao FormData
+        const formData = new FormData();
         formData.append('thumb', thumb);
         images.forEach((image) => {
             formData.append('images', image);
         });
 
-        // Adiciona os outros dados ao FormData
         formData.append('predio', predio);
         formData.append('description', description);
         formData.append('price', price);
@@ -191,12 +190,15 @@ function CadImovel() {
                             name="cep"
                             placeholder="Informe o CEP"
                             onChange={(e) => setCep(e.target.value)}
+                            onBlur={() => checkCep(cep)
+                            }
                         />
                         <Label>Logradouro:</Label>
                         <Input
                             type="text"
                             name="logradouro"
                             placeholder="Informe o logradouro"
+                            value={logradouro}
                             onChange={(e) => setLogradouro(e.target.value)}
                         />
                         <Label>Número:</Label>
@@ -211,6 +213,7 @@ function CadImovel() {
                             type="text"
                             name="bairro"
                             placeholder="Informe o bairro"
+                            value={bairro}
                             onChange={(e) => setBairro(e.target.value)}
                         />
                         <Label>Complemento:</Label>
@@ -225,6 +228,7 @@ function CadImovel() {
                             type="text"
                             name="cidade"
                             placeholder="Informe a cidade"
+                            value={cidade}
                             onChange={(e) => setCidade(e.target.value)}
                         />
                         <Label>UF:</Label>
@@ -232,6 +236,7 @@ function CadImovel() {
                             type="text"
                             name="uf"
                             placeholder="Informe o UF"
+                            value={uf}
                             onChange={(e) => setUf(e.target.value)}
                         />
                     </Section>
