@@ -11,6 +11,7 @@ import Perfil from "../pages/Perfil";
 import PoliticaPrivacidade from "../pages/PoliticaPrivacidade/Privacidade";
 import PoliticaUso from "../pages/PoliticaPrivacidade/Uso/uso";
 import PrivateRoute from "../components/PrivateRoute";
+import CadImovel from "../pages/CadImovel";
 
 // Rotas da Aplicação
 const RouterApp = () => { 
@@ -30,6 +31,13 @@ const RouterApp = () => {
             </PrivateRoute>
           }
         />
+        <Route 
+        path="/cadastro-imovel" 
+        element={
+          <PrivateRoute>
+            <CadImovel />
+          </PrivateRoute>
+        } />
         <Route path="*" element={<Error />} />
         <Route path="/politica-privacidade" element={<PoliticaPrivacidade />} />
         <Route path="/politica-privacidade/uso" element={<PoliticaUso />} />

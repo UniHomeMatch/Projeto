@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-    padding: 50px 150px;
+    padding: 25px 100px;
     position: relative;
     background-size: cover;
     background-position: center;

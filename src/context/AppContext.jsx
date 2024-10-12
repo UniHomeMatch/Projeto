@@ -29,7 +29,7 @@ export const AppContextProvider = ({ children }) => {
         const payload = { token: response.data.token, email, id }
         setUser(payload);
         SetLocalStorage(payload);
-        window.location.href = "/perfil"
+        window.location.href = "/cadastro-imovel"
       }).catch(() => {
         console.log('Erro: App Error');
       });

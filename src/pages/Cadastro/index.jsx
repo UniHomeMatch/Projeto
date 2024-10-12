@@ -6,12 +6,12 @@ import api from '../../services/Api';
 import { toast } from 'react-toastify';
 import { FormControlLabel, Radio, RadioGroup } from '@mui/material';
 import ReCAPTCHA from 'react-google-recaptcha';
-
-
-
+import { useNavigate } from 'react-router-dom';
 
 
 const Cadastro = () => {
+
+  const navigate = useNavigate();
   const [recaptcha, setRecaptcha] = useState(null);
   const [data, setData] = useState({
     name: '',
@@ -45,6 +45,8 @@ const Cadastro = () => {
           toast(response.response.data.message);
         }
       })
+
+      navigate('/login'); 
   };
 
   return (
@@ -69,6 +71,8 @@ const Cadastro = () => {
           <Input type="text" name="email" id="email" placeholder="Digite seu Email" onChange={InputValue} autocomplete="off" required />
           <Label for="password">Senha</Label>
           <Input type="password" name="password" id="password" placeholder="Digite sua Senha" onChange={InputValue} autocomplete="off" required />
+          <Label for="password">Confirmar Senha</Label>
+          <Input type="password" name="confirmPassword" id="confirmPassword" placeholder="Digite sua Senha" onChange={InputValue} autocomplete="off" required />
           <ReCAPTCHA
             sitekey="6LcpxSwqAAAAAE2yAjZ5KlYY515HBcTQnfuETeQm"
             onChange={(value) => setRecaptcha(value)}

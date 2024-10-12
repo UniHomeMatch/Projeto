@@ -9,7 +9,7 @@ const Footer = () => {
             <Container>
                 <Item>
                     <img src={LogoImg} alt="" />
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolores ullam minima, laborum incidunt quia deserunt voluptates quod? Nihil itaque nobis asperiores accusamus voluptates a laborum, fuga sequi minus facere earum!</p>
+                    <p>Projeto de extensão da Universidade Filadélfia de Londrina - UNIFIL, desenvolvido por alunos de Ciência da Computação e Engenharia de Software.</p>
                     <nav>
                         <li><span><FaFacebook size={32} /></span></li>
                         <li><span><FaInstagram size={32} /></span></li>
@@ -17,7 +17,7 @@ const Footer = () => {
                     </nav>
                 </Item>
                 <Item>
-                    <h3>Nossos Serviços</h3>
+                    <h4>Nossos Serviços</h4>
                     <ul>
                         <li><span>Comprar</span></li>
                         <li><span>Alugar</span></li>
@@ -25,7 +25,7 @@ const Footer = () => {
                     </ul>
                 </Item>
                 <Item>
-                    <h3>Termos de Uso</h3>
+                    <h4>Termos de Uso</h4>
                     <ul>
                     <li><span><a href="/politica-privacidade/uso"> Termos de Uso </a></span></li>
                     <li><span><a href="/politica-privacidade"> Política de Privacidade </a></span></li>
@@ -33,7 +33,7 @@ const Footer = () => {
                     </ul>
                 </Item>
                 <Item>
-                    <h3>Contato</h3>
+                    <h4>Contato</h4>
                     <ul>
                         <li><span>contato@unihomematch.com</span></li>
                         <li><span>Londrina Paraná</span></li>
