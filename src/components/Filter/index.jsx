@@ -290,6 +290,7 @@ export const Filter = () => {
             boxShadow: '2px 0px 8px rgba(0, 0, 0, 0.1)',
             zIndex: 1000,
             borderRight: '1px solid #ddd',
+            borderRadius: '25px',
         }}
     >
         <Container>

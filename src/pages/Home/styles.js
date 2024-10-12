@@ -31,10 +31,20 @@ export const Container = styled.div`
 `
 
 export const Div = styled.div`
-    width: 25%;
+    width: 16,5%;
     margin-left: 10px;
-    background-color: var(--gray);
-    border-radius: 10px;
-    border: 3px solid rgb(0,0,0);
-    border-color: var(--tercery);
+    background-color: var(--white);
+    border-radius: 25px;
+    box-shadow: 0px 0px 10px var(--orangelight);
+    margin-bottom: 25px;
+`
+
+export const DivCard = styled.div`
+    width: 80%;
+    margin-left: -50px;
+`
+
+export const DivPesquisa = styled.div`
+    width: 83.5%;
+    margin-left: 100px;
 `

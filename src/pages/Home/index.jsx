@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Header, Wrapper, Container, Div } from "./styles";
+import { Header, Wrapper, Container, Div, DivCard, DivPesquisa } from "./styles";
 import Card from "../../components/Card";
 import Banner from "../../components/Banner";
 import api from "../../services/Api";
@@ -30,7 +30,10 @@ const Home = () => {
             <Div>
                 <Filter />
             </Div>
-            <TextField id="pesquisa" label="Pesquisa" variant="outlined" size='small' fullWidth color="warning" />
+            <DivCard>
+            <DivPesquisa>
+            <TextField id="pesquisa" label="Pesquisa" variant="outlined" size="small" fullWidth color="warning"  />
+            </DivPesquisa>
             <Wrapper>
                 {imobi.map((items) => (
                     <Card key={items.id} 
@@ -41,6 +44,7 @@ const Home = () => {
                     slug={items.slug} />
                 ))}
             </Wrapper>
+            </DivCard>
             </Container>
         </Fragment>
     )
