@@ -19,6 +19,7 @@ const Card = ({ thumb, title, location, price, slug }) => {
         <Link to={`/imovel/${slug}`}>Detalhes <FaArrowRight /></Link>
       </Description>
     </Container>
+    
     )
 }
 

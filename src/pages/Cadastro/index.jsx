@@ -6,12 +6,12 @@ import api from '../../services/Api';
 import { toast } from 'react-toastify';
 import { FormControlLabel, Radio, RadioGroup } from '@mui/material';
 import ReCAPTCHA from 'react-google-recaptcha';
-
-
-
+import { useNavigate } from 'react-router-dom';
 
 
 const Cadastro = () => {
+
+  const navigate = useNavigate();
   const [recaptcha, setRecaptcha] = useState(null);
   const [data, setData] = useState({
     name: '',
@@ -45,6 +45,8 @@ const Cadastro = () => {
           toast(response.response.data.message);
         }
       })
+
+      navigate('/login'); 
   };
 
   return (
