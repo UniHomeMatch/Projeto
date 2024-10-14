@@ -74,7 +74,7 @@ const Cadastro = () => {
           <Label for="password">Confirmar Senha</Label>
           <Input type="password" name="confirmPassword" id="confirmPassword" placeholder="Digite sua Senha" onChange={InputValue} autocomplete="off" required />
           <ReCAPTCHA
-            sitekey="6LcpxSwqAAAAAE2yAjZ5KlYY515HBcTQnfuETeQm"
+            sitekey="6LduWGEqAAAAAJy_OukHrUgLV8D6Jgnm6ylP9KdU"
             onChange={(value) => setRecaptcha(value)}
             size="normal"
             theme="clear"
