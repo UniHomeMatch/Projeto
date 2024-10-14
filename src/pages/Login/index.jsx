@@ -16,6 +16,7 @@ const Login = () => {
     await auth.authenticate(email, password);
   }
 
+  
   return (
     <Container>
       <h2>Acesse sua conta</h2>
@@ -37,7 +38,7 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <ReCAPTCHA
-            sitekey="6LcpxSwqAAAAAE2yAjZ5KlYY515HBcTQnfuETeQm"
+            sitekey="6LduWGEqAAAAAJy_OukHrUgLV8D6Jgnm6ylP9KdU"
             onChange={(value) => setRecaptcha(value)}
             size="normal"
             theme="clear"
