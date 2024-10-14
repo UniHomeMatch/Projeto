@@ -12,7 +12,12 @@ const Perfil = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
-  const [location, setLocation] = useState('');
+  const [cep, setCep] = useState('');
+  const [logradouro, setLogradouro] = useState('');
+  const [numero, setNumero] = useState('');
+  const [complemento, setComplemento] = useState('');
+  const [cidade, setCidade] = useState('');
+  const [uf, setUf] = useState('');
   const [area, setArea] = useState('');
   const [bedrooms, setBedrooms] = useState('');
   const [bathrooms, setBathrooms] = useState('');
@@ -31,7 +36,12 @@ const Perfil = () => {
     title,
     description,
     price,
-    location,
+    cep, 
+    logradouro, 
+    numero,
+    complemento, 
+    cidade,
+    uf,
     area,
     bedrooms,
     bathrooms,
@@ -71,6 +81,16 @@ const Perfil = () => {
       });
   }
 
+  const checkCep = (e) =>{
+    const cep = e.target.value.replace(/\D/g, '');
+    fetch(`https://viacep.com.br/ws/${cep}/json/`)
+    .then(res => res.json()).then(data => {
+      setLogradouro('logradouro', data.logradouro);
+      setCidade('cidade', data.localidade);
+      setUf('uf', data.uf);      
+    });
+  }
+
   return (
     <Container>
     <Left>
@@ -99,9 +119,40 @@ const Perfil = () => {
         />
         <Input
           type="text"
-          name="location"
-          placeholder="Informe o endereço do imóvel:"
-          onChange={(e) => setLocation(e.target.value)}
+          name="cep"
+          placeholder="Informe o CEP do imóvel:"
+          onChange={(e) => setCep(e.target.value)}
+          onBlur={checkCep}
+        />
+        <Input
+          type="text"
+          name="logradouro"
+          placeholder="Informe o logradouro do imóvel:"
+          onChange={(e) => setLogradouro(e.target.value)}
+        />
+        <Input
+          type="text"
+          name="numero"
+          placeholder="Informe o número do imóvel:"
+          onChange={(e) => setNumero(e.target.value)}
+        />
+        <Input
+          type="text"
+          name="complemento"
+          placeholder="Informe o complemento do imóvel:"
+          onChange={(e) => setComplemento(e.target.value)}
+        />
+        <Input
+          type="text"
+          name="cidade"
+          placeholder="Informe a cidade do imóvel:"
+          onChange={(e) => setCidade(e.target.value)}
+        />
+        <Input
+          type="text"
+          name="uf"
+          placeholder="Informe o estado do imóvel:"
+          onChange={(e) => setUf(e.target.value)}
         />
         <Input
           type="text"

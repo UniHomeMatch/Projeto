@@ -21,7 +21,7 @@ const Imobi = () => {
     useEffect(() => {
         api.get(`/listimobi/${slug}`)
             .then((response) => {
-                console.log(response.data);
+                console.log(response.data); 
                 setDataImobi(response.data);
 
                 // Supondo que a resposta inclua um array de URLs de imagem
@@ -34,10 +34,15 @@ const Imobi = () => {
 
     const {
         title,
-        location,
         description,
         thumb,
         price,
+        cep, 
+        logradouro, 
+        numero,
+        complemento, 
+        cidade,
+        uf,
         area,
         bedrooms,
         bathrooms,
@@ -90,7 +95,7 @@ const Imobi = () => {
                         <span><IoBedSharp />{bedrooms}</span>
                         <span><FaBath /> {bathrooms}</span>
                         <span><ImEnlarge />{area}</span>
-                        <h5><FaMapLocationDot />{location}</h5>
+                        {/* <h5><FaMapLocationDot />{location}</h5> */}
                         <p>{description}</p>
                     </Description>
                 </Left>
