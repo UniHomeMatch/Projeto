@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Text } from "./styles";
 
 const Banner = ( ) => {
-    return (
+    return ( 
         <Container>
            <Text>
             <h2>Descubra o Encanto da Sua Próxima Moradia</h2>
