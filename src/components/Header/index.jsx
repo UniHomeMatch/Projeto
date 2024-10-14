@@ -19,9 +19,19 @@ const Header = () => {
       <Menu>
         <ul>
           {!userLogged ?
-            <li><Link to='/login'><span>Cadastro/Login</span></Link></li>
+            <li><Link to='/login'
+            style={{
+              color:'black',
+            }}
+            >
+            <span>Cadastro/Login</span></Link></li>
             :
-            <li><Link onClick={handleLogooff}><span>Sair</span></Link></li>
+            <li><Link 
+            onClick={handleLogooff}
+            style={{
+              color:'black',
+            }}
+            ><span>Sair</span></Link></li>
           }
         </ul>
       </Menu>

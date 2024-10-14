@@ -27,9 +27,9 @@ const Footer = () => {
                 <Item>
                     <h4>Termos de Uso</h4>
                     <ul>
-                    <li><span><a href="/politica-privacidade/uso"> Termos de Uso </a></span></li>
-                    <li><span><a href="/politica-privacidade"> Política de Privacidade </a></span></li>
-                    <li><span><a href="/politica-privacidade"> Legal </a></span></li>
+                    <li><span><a href="/politica-privacidade/uso" style={{color:"black"}}> Termos de Uso </a></span></li>
+                    <li><span><a href="/politica-privacidade" style={{color:"black"}}> Política de Privacidade </a></span></li>
+                    <li><span><a href="/politica-privacidade" style={{color:"black"}}> Legal </a></span></li>
                     </ul>
                 </Item>
                 <Item>
