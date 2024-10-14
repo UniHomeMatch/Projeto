@@ -1,13 +1,37 @@
-import React, { useState } from "react";
-import { Container, Form, Label, Right, Section, Mask } from "./Styles";
+import React, { useEffect, useState } from "react";
+import { Container, Form, Label, Right, Section, Mask, ContainerCard, Img, Description, Itens } from "./Styles";
 import Input from "../../components/Input"; 
-import api from "../../services/Api";
+import api, { urlApi } from "../../services/Api";
 import { toast } from "react-toastify";
 import Button from "../../components/Button";
 import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
+import { Wrapper } from "../../pages/CadImovel/Styles";
+import { Div } from "../../pages/CadImovel/Styles";
+import { FaArrowRight, FaMapMarkerAlt } from "react-icons/fa";
+import { Link } from "react-router-dom";
+
+export function Card({ thumb, title, location, price, slug}){
+    return (
+        <ContainerCard>
+            <Img>
+                <img src={`${urlApi}/uploads/${thumb}`} alt="" />
+            </Img>
+            <Description>
+                <h4>{title}</h4>
+                <Itens>
+                    <span><FaMapMarkerAlt />{location}</span>
+                    <span>R$ {price} / mês</span>
+                </Itens>
+                <Link to={`/imovel/${slug}`}>Detalhes <FaArrowRight /></Link>
+            </Description>
+        </ContainerCard>
+    )
+}
+
+
 
 function CadImovel() {
-
+    const [imobi, setImobi] = useState([]);
     const [thumb, setThumb] = useState('');
     const [images, setImages] = useState('');
     const [predio, setPredio] = useState('');
@@ -28,7 +52,8 @@ function CadImovel() {
     const [email, setEmail] = useState('');
     const [generoId, setGenero] = useState('');
 
-    const InputValue = (e) => setGenero({ ...data, generoId: e.target.value });
+    // Função corrigida para setar apenas o valor de generoId
+    const InputValue = (e) => setGenero(e.target.value);
 
     const data = {
         thumb,
@@ -52,26 +77,42 @@ function CadImovel() {
         generoId,
     };
 
+    useEffect(() => {
+        api.get('/listimobi')
+            .then((response) => setImobi(response.data))
+            .catch(() => console.log('Erro ao buscar os imóveis'));
+    }, []);
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const headers = {
-            'headers': {
-                'content-type': 'multipart/form-data'
-            }
-        }
+            headers: {
+                'content-type': 'multipart/form-data',
+            },
+        };
 
         api.post('/createimobi', data, headers)
-            .then((response) => {
-                toast(response.data.message);
-            })
-            .catch((response) => {
-                console.log(response.response.data.message);
-            });
-    }
+            .then((response) => toast(response.data.message))
+            .catch((error) => console.log(error.response.data.message));
+    };
 
     return (
         <Container>
+            <Div>
             Cadastre seu ánuncio agora!
+            <Wrapper>
+                {imobi.map((item) => (
+                    <Card 
+                        key={item.id} 
+                        thumb={item.thumb}
+                        title={item.title}
+                        location={item.location}
+                        price={item.price}
+                        slug={item.slug} 
+                    />
+                ))}
+            </Wrapper>
+            </Div>
             <Right>
                 <Form onSubmit={handleSubmit} autoComplete="off">
 
