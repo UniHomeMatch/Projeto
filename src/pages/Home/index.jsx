@@ -1,8 +1,9 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Header, Wrapper } from "./styles";
+import { Header, Wrapper, Container, Div, DivCard, DivPesquisa } from "./styles";
 import Card from "../../components/Card";
 import Banner from "../../components/Banner";
 import api from "../../services/Api";
+import { Filter } from "../../components/Filter";
 import { TextField } from "@mui/material";
 
 const Home = () => {
@@ -24,8 +25,15 @@ const Home = () => {
             <Banner />
             <Header>
                 <h2>Encontre o seu espaço dos sonhos!</h2>
-                <TextField id="pesquisa" label="Pesquisa" variant="outlined" size='small' fullWidth color="warning" />
             </Header>
+            <Container>
+            <Div>
+                <Filter />
+            </Div>
+            <DivCard>
+            <DivPesquisa>
+            <TextField id="pesquisa" label="Pesquisa" variant="outlined" size="small" fullWidth color="warning"  />
+            </DivPesquisa>
             <Wrapper>
                 {imobi.map((items) => (
                     <Card key={items.id} 
@@ -36,6 +44,8 @@ const Home = () => {
                     slug={items.slug} />
                 ))}
             </Wrapper>
+            </DivCard>
+            </Container>
         </Fragment>
     )
 }
