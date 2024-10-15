@@ -6,6 +6,15 @@ import api from '../../services/Api';
 import Avatar from '@mui/material/Avatar';
 
 const Header = () => {
+  // Define userProfile first
+  const user = JSON.parse(localStorage.getItem('user')) || {};
+  const userProfile = {
+    name: user.name,
+    email: user.email,
+    profilePic: user.profile 
+  };
+
+  // Initialize state variables after userProfile
   const [showModal, setShowModal] = useState(false);
   const [editing, setEditing] = useState(false);
   const [profilePic, setProfilePic] = useState(userProfile.profilePic);
@@ -29,13 +38,6 @@ const Header = () => {
   };
   
   const userLogged = localStorage.getItem('Yt'); 
-  const user = JSON.parse(localStorage.getItem('user')) || {};
-  const userProfile = {
-    name: user.name,
-    email: user.email,
-    profilePic: user.profile 
-  };
-
   const handleEditProfile = () => {
     setEditing(true);
   };
@@ -109,4 +111,3 @@ const Header = () => {
 };
 
 export default Header;
-
