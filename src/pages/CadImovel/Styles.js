@@ -108,23 +108,26 @@ export const Mask = styled(ReactInputMask)`
 `;
 
 export const Wrapper = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 15px;
+  padding-right: 10px;
+  gap: 20px;
 `
 export const Div = styled.div`
-    width: 50%;
+    width: 60%;
     padding: 10px;
 `
 export const ContainerCard = styled.div`
-    width: 50%;
-    margin-bottom: 12px;
-    background-color: var(--white);
-    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.1);
-    border-radius: 4px;
-`
+  width: calc(50% - 20px);
+  margin-bottom: 20px;
+  background-color: var(--white);
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+`;
+
 
 export const Img = styled.div`
     width: 100%;
