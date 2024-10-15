@@ -65,6 +65,9 @@ export const ModalContainer = styled.div`
 //adição de estilização para a parte de conteúdo do modal
 //coloquei para que quando seja aberto o perfil, a foto continue circular porém maior
 //os links vão ser azuis e o sublinhado deles não vai aparecer ao menos que passe o mouse em cima deles
+//adicionei uma transição para seguir para a edição
+//essa transição irá mover o modal para a esquerda e meio que apaga/passa para o lado o que estava -
+ // - anteriormente e mostra o conteudo de edição
 export const ModalContent = styled.div`
   background: white;
   border-radius: 10px;
@@ -73,6 +76,11 @@ export const ModalContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  transition: transform 0.3s ease-in-out; 
+
+  &.editing {
+    transform: translateX(-50px); 
+  }
 
   img {
     width: 80px;
@@ -104,6 +112,18 @@ export const ModalContent = styled.div`
     cursor: pointer;
     &:hover {
       background-color: #d32f2f;
+    }
+  }
+    form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    input {
+      margin: 5px 0;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      width: 100%;
     }
   }
 `
