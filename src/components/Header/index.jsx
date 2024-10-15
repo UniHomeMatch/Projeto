@@ -62,7 +62,6 @@ const Header = () => {
                     //adicionei o mini forms dentro do modal para fazer a edição dentro dele mesmo
                     <form onSubmit={handleSubmit}>
                     <h3>Editar Perfil</h3>
-                    {/* Campo para editar a foto com pré-visualização */}
                     <input 
                       type="file" 
                       accept="image/*" 
@@ -71,18 +70,18 @@ const Header = () => {
                         if (file) {
                           const reader = new FileReader();
                           reader.onloadend = () => {
-                            setProfilePic(reader.result); // Atualiza o estado com a nova imagem
+                            setProfilePic(reader.result);
                           };
                           reader.readAsDataURL(file);
                         }
                       }} 
                     />
-                    {/* Exibição do avatar com a nova imagem (ou a atual se não houver) */}
+                    
                     <Avatar alt={userProfile.name} src={profilePic || userProfile.profilePic} />
-                    <input type="email" defaultValue={userProfile.email} placeholder="E-mail" /> {/* Campo para editar o e-mail */}
-                    <input type="password" placeholder="Nova Senha" /> {/* Campo para nova senha */}
-                    <button type="submit">Salvar</button> {/* Botão para salvar as alterações */}
-                    <button type="button" onClick={() => setEditing(false)}>Cancelar</button> {/* Botão para cancelar a edição */}
+                    <input type="email" defaultValue={userProfile.email} placeholder="E-mail" />
+                    <input type="password" placeholder="Nova Senha" /> 
+                    <button type="submit">Salvar</button> 
+                    <button type="button" onClick={() => setEditing(false)}>Cancelar</button> 
                   </form>
                 ) : (
                   <>
@@ -92,7 +91,7 @@ const Header = () => {
                 
                     <Link to="/mensagens">Mensagens</Link>
                     <Link to="/anuncios">Anúncios</Link>
-                    
+
                     <button onClick={handleEditProfile}>Editar Perfil</button>
                     <button onClick={handleLogout}>Logout</button>
                     </>
