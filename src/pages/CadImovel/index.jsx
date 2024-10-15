@@ -5,8 +5,13 @@ import api from "../../services/Api";
 import { toast } from "react-toastify";
 import Button from "../../components/Button";
 import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
+import { useContext } from 'react';
+import { AppContext } from '../../context/AppContext';
 
 function CadImovel() {
+debugger;
+    const { user } = useContext(AppContext); // Obtém o usuário logado
+    const userId = user ? user.id : null; // Isso agora deve funcionar
 
     const [thumb, setThumb] = useState('');
     const [images, setImages] = useState([]);
@@ -56,7 +61,7 @@ function CadImovel() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
+debugger;
         const formData = new FormData();
         formData.append('thumb', thumb);
         images.forEach((image) => {
@@ -80,6 +85,8 @@ function CadImovel() {
         formData.append('phone', phone);
         formData.append('email', email);
         formData.append('generoId', generoId);
+        formData.append('userId', userId);
+
 
         api.post('/createimobi', formData, {
             headers: {
@@ -88,10 +95,13 @@ function CadImovel() {
         })
             .then((response) => {
                 toast(response.data.message);
+                console.log(response);
+                console.log(response.data.message);
             })
-            .catch((response) => {
-                console.log(response.response.data.message);
-            });
+            .catch((error) => {
+                console.log(error.response.data); // Mostra toda a resposta de erro
+                toast.error(error.response.data.message);
+              });
     };
 
     return (
