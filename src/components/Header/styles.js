@@ -51,12 +51,10 @@ export const ProfileIcon = styled.div`
 `;
 
 //adição da estilização do container do modal 
-//deixei o fundo meio transparente
 export const ModalContainer = styled.div`
   position: fixed;
   top: 70px;
   right: 30px;
-  background: rgba(0, 0, 0, 0.5);
   width: 100vw;
   height: 100vh;
   display: flex;
