@@ -1,14 +1,14 @@
-
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import LogoImg from "../../assets/logo.png";
-import { Container, Logo, Menu, ProfileIcon, ModalContainer, ModalContent } from "./styles"; //adição do icone do perfil, o container do modal e seu conteudo
+import { Container, Logo, Menu, ProfileIcon, ModalContainer, ModalContent } from "./styles";
 import api from '../../services/Api';
 import Avatar from '@mui/material/Avatar';
 
 const Header = () => {
-  const [showModal, setShowModal] = useState(false); //adicionado para controlar a vizu do modal na hora de ver e desver(vcs entenderam, bjs) 
-  const [editing, setEditing] = useState(false); // adicionado para edição dentro do próprio modal
+  const [showModal, setShowModal] = useState(false);
+  const [editing, setEditing] = useState(false);
+  const [profilePic, setProfilePic] = useState(userProfile.profilePic);
 
   const handleLogout = () => {
     localStorage.clear();
@@ -19,7 +19,7 @@ const Header = () => {
   
     const userId = localStorage.getItem('userId');
   
-    api.get(`/listusers/${userId}`) // Corrigido: utilize a URL diretamente
+    api.get(`/listusers/${userId}`)
     .then((response) => {
         console.log('Dados do usuário:', response.data);
       })
@@ -35,9 +35,20 @@ const Header = () => {
     email: user.email,
     profilePic: user.profile 
   };
-  
+
   const handleEditProfile = () => {
     setEditing(true);
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfilePic(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   return (
@@ -57,44 +68,34 @@ const Header = () => {
               
               {showModal && ( 
                 <ModalContainer onClick={() => setShowModal(false)}>
-                  <ModalContent onClick={(e) => e.stopPropagation()}className={editing ? 'editing' : ''}>
+                  <ModalContent onClick={(e) => e.stopPropagation()}>
                   {editing ? ( 
-                    //adicionei o mini forms dentro do modal para fazer a edição dentro dele mesmo
                     <form onSubmit={handleSubmit}>
-                    <h3>Editar Perfil</h3>
-                    <input 
-                      type="file" 
-                      accept="image/*" 
-                      onChange={(e) => {
-                        const file = e.target.files[0];
-                        if (file) {
-                          const reader = new FileReader();
-                          reader.onloadend = () => {
-                            setProfilePic(reader.result);
-                          };
-                          reader.readAsDataURL(file);
-                        }
-                      }} 
-                    />
-                    
-                    <Avatar alt={userProfile.name} src={profilePic || userProfile.profilePic} />
-                    <input type="email" defaultValue={userProfile.email} placeholder="E-mail" />
-                    <input type="password" placeholder="Nova Senha" /> 
-                    <button type="submit">Salvar</button> 
-                    <button type="button" onClick={() => setEditing(false)}>Cancelar</button> 
-                  </form>
-                ) : (
-                  <>
-                    <Avatar alt={userProfile.name} src={userProfile.profilePic} />
-                    <h3>{userProfile.name}</h3>
-                    <p>{userProfile.email}</p>
-                
-                    <Link to="/mensagens">Mensagens</Link>
-                    <Link to="/anuncios">Anúncios</Link>
+                      <h3>Editar Perfil</h3>
+                      <input 
+                        type="file" 
+                        accept="image/*" 
+                        onChange={handleFileChange}
+                      />
+                      
+                      <Avatar alt={userProfile.name} src={profilePic} />
+                      <input type="email" defaultValue={userProfile.email} placeholder="E-mail" />
+                      <input type="password" placeholder="Nova Senha" /> 
+                      <button type="submit">Salvar</button> 
+                      <button type="button" onClick={() => setEditing(false)}>Cancelar</button> 
+                    </form>
+                  ) : (
+                    <>
+                      <Avatar alt={userProfile.name} src={userProfile.profilePic} />
+                      <h3>{userProfile.name}</h3>
+                      <p>{userProfile.email}</p>
+                  
+                      <Link to="/mensagens">Mensagens</Link>
+                      <Link to="/anuncios">Anúncios</Link>
 
-                    <button onClick={handleEditProfile}>Editar Perfil</button>
-                    <button onClick={handleLogout}>Logout</button>
-                    </>
+                      <button onClick={handleEditProfile}>Editar Perfil</button>
+                      <button onClick={handleLogout}>Logout</button>
+                      </>
                     )}
                   </ModalContent>
                 </ModalContainer>
@@ -108,3 +109,4 @@ const Header = () => {
 };
 
 export default Header;
+
