@@ -4,6 +4,7 @@ import LogoImg from "../../assets/logo.png";
 import { Container, Logo, Menu, ProfileIcon, ModalContainer, ModalContent } from "./styles";
 import api from '../../services/Api';
 import Avatar from '@mui/material/Avatar';
+import { AvatarGroup } from "@mui/material";
 
 const Header = () => {
   // Define userProfile first
@@ -11,7 +12,7 @@ const Header = () => {
   const userProfile = {
     name: user.name,
     email: user.email,
-    profilePic: user.profile 
+    profilePic: user.profile
   };
 
   // Initialize state variables after userProfile
@@ -25,19 +26,19 @@ const Header = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-  
+
     const userId = localStorage.getItem('userId');
-  
+
     api.get(`/listusers/${userId}`)
-    .then((response) => {
+      .then((response) => {
         console.log('Dados do usuário:', response.data);
       })
       .catch((error) => {
         console.error('Erro ao buscar os dados do usuário:', error);
       });
   };
-  
-  const userLogged = localStorage.getItem('Yt'); 
+
+  const userLogged = localStorage.getItem('Yt');
   const handleEditProfile = () => {
     setEditing(true);
   };
@@ -64,39 +65,67 @@ const Header = () => {
             <li><Link to='/login'><span>Cadastro/Login</span></Link></li>
           ) : (
             <>
-              <ProfileIcon onClick={() => setShowModal(!showModal)}> 
+              {/* <ProfileIcon onClick={() => setShowModal(!showModal)}> 
                 <img src={userProfile.profilePic} />
-              </ProfileIcon>
-              
-              {showModal && ( 
+              </ProfileIcon> */}
+              <Avatar
+                onClick={() => setShowModal(!showModal)}
+                alt="Travis Howard"
+                src={userProfile.profilePic}
+                sx={{ width: 50, height: 50 }}
+              />
+
+              {showModal && (
                 <ModalContainer onClick={() => setShowModal(false)}>
                   <ModalContent onClick={(e) => e.stopPropagation()}>
-                  {editing ? ( 
-                    <form onSubmit={handleSubmit}>
-                      <h3>Editar Perfil</h3>
-                      <input 
-                        type="file" 
-                        accept="image/*" 
-                        onChange={handleFileChange}
-                      />
-                      
-                      <Avatar alt={userProfile.name} src={profilePic} />
-                      <input type="email" defaultValue={userProfile.email} placeholder="E-mail" />
-                      <input type="password" placeholder="Nova Senha" /> 
-                      <button type="submit">Salvar</button> 
-                      <button type="button" onClick={() => setEditing(false)}>Cancelar</button> 
-                    </form>
-                  ) : (
-                    <>
-                      <Avatar alt={userProfile.name} src={userProfile.profilePic} />
-                      <h3>{userProfile.name}</h3>
-                      <p>{userProfile.email}</p>
-                  
-                      <Link to="/mensagens">Mensagens</Link>
-                      <Link to="/anuncios">Anúncios</Link>
+                    {editing ? (
+                      // <form onSubmit={handleSubmit}>
+                      //   <h3>Editar Perfil</h3>
+                      //   <input 
+                      //     type="file" 
+                      //     accept="image/*" 
+                      //     onChange={handleFileChange}
+                      //   />
 
-                      <button onClick={handleEditProfile}>Editar Perfil</button>
-                      <button onClick={handleLogout}>Logout</button>
+                      //   <Avatar alt={userProfile.name} src={profilePic} sx={{ width: 50, height: 50 }}/>
+                      //   <input type="email" defaultValue={userProfile.email} placeholder="E-mail" />
+                      //   <input type="password" placeholder="Nova Senha" /> 
+                      //   <button type="submit">Salvar</button> 
+                      //   <button type="button" onClick={() => setEditing(false)}>Cancelar</button> 
+                      // </form>
+                      <form onSubmit={handleSubmit}>
+                        <h3>Editar Perfil</h3>
+
+                        {/* Avatar clicável p/ nova img */}
+                        <div onClick={() => document.getElementById('fileInput').click()}>
+                          <Avatar alt={userProfile.name} src={profilePic} sx={{ width: 50, height: 50, cursor: 'pointer' }} />
+                        </div>
+
+                        {/* olcutar input file */}
+                        <input
+                          id="fileInput"
+                          type="file"
+                          accept="image/*"
+                          onChange={handleFileChange}
+                          style={{ display: 'none' }} 
+                        />
+
+                        <input type="email" defaultValue={userProfile.email} placeholder="E-mail" />
+                        <input type="password" placeholder="Nova Senha" />
+                        <button type="submit">Salvar</button>
+                        <button type="button" onClick={() => setEditing(false)}>Cancelar</button>
+                      </form>
+                    ) : (
+                      <>
+                        <Avatar alt={userProfile.name} src={userProfile.profilePic} sx={{ width: 50, height: 50 }} />
+                        <h3>{userProfile.name}</h3>
+                        <p>{userProfile.email}</p>
+
+                        <Link to="/mensagens">Mensagens</Link>
+                        <Link to="/anuncios">Anúncios</Link>
+
+                        <button onClick={handleEditProfile}>Editar Perfil</button>
+                        <button onClick={handleLogout}>Logout</button>
                       </>
                     )}
                   </ModalContent>
