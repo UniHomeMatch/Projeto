@@ -70,7 +70,7 @@ const Header = () => {
               </ProfileIcon> */}
               <Avatar
                 onClick={() => setShowModal(!showModal)}
-                alt="Travis Howard"
+                alt="Avatar"
                 src={userProfile.profilePic}
                 sx={{ width: 50, height: 50 }}
               />
