@@ -26,6 +26,7 @@ export const Menu = styled.div`
       color: black;
       border-radius: 10px;
       padding: 10px;
+      margin-right: 10px; 
       span {
         font-size: 1.2rem;
         font-weight: 300;
@@ -38,9 +39,6 @@ export const Menu = styled.div`
   }
 `;
 
-//adição da estilização para o ícone do perfil
-//adição de deixar a imagem de perfil em círculo
-//adição de tornar clicável com o cursor
 export const ProfileIcon = styled.div`
   img {
     width: 50px;
@@ -50,7 +48,6 @@ export const ProfileIcon = styled.div`
   }
 `;
 
-//adição da estilização do container do modal 
 export const ModalContainer = styled.div`
   position: fixed;
   top: 70px;
@@ -62,12 +59,6 @@ export const ModalContainer = styled.div`
   align-items: flex-start;
 `;
 
-//adição de estilização para a parte de conteúdo do modal
-//coloquei para que quando seja aberto o perfil, a foto continue circular porém maior
-//os links vão ser azuis e o sublinhado deles não vai aparecer ao menos que passe o mouse em cima deles
-//adicionei uma transição para seguir para a edição
-//essa transição irá mover o modal para a esquerda e meio que apaga/passa para o lado o que estava -
- // - anteriormente e mostra o conteudo de edição
 export const ModalContent = styled.div`
   background: white;
   border-radius: 10px;
@@ -79,7 +70,7 @@ export const ModalContent = styled.div`
   transition: transform 0.3s ease-in-out; 
 
   &.editing {
-    transform: translateX(-50px); 
+    transform: translateX(-50px);
   }
 
   img {
@@ -88,13 +79,16 @@ export const ModalContent = styled.div`
     border-radius: 50%;
     margin-bottom: 15px;
   }
+
   h3 {
     margin: 10px 0;
   }
+
   p {
     color: gray;
     margin-bottom: 20px;
   }
+
   a {
     margin-bottom: 10px;
     color: #0073e6;
@@ -103,6 +97,7 @@ export const ModalContent = styled.div`
       text-decoration: underline;
     }
   }
+
   button {
     background-color: #f44336;
     color: white;
@@ -110,11 +105,13 @@ export const ModalContent = styled.div`
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    margin-top: 10px;
     &:hover {
       background-color: #d32f2f;
     }
   }
-    form {
+
+  form {
     display: flex;
     flex-direction: column;
     align-items: center;

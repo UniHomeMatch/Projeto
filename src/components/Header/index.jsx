@@ -4,18 +4,15 @@ import LogoImg from "../../assets/logo.png";
 import { Container, Logo, Menu, ProfileIcon, ModalContainer, ModalContent } from "./styles";
 import api from '../../services/Api';
 import Avatar from '@mui/material/Avatar';
-import { AvatarGroup } from "@mui/material";
 
 const Header = () => {
-  // Define userProfile first
   const user = JSON.parse(localStorage.getItem('user')) || {};
   const userProfile = {
-    name: user.name,
-    email: user.email,
-    profilePic: user.profile
+    name: user.name || "Nome do usuário",  
+    email: user.email || "Email não informado",
+    profilePic: user.profile || ""  
   };
 
-  // Initialize state variables after userProfile
   const [showModal, setShowModal] = useState(false);
   const [editing, setEditing] = useState(false);
   const [profilePic, setProfilePic] = useState(userProfile.profilePic);
@@ -24,23 +21,19 @@ const Header = () => {
     localStorage.clear();
     window.location.href = "/login";
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const userId = localStorage.getItem('userId');
 
-    api.get(`/listusers/${userId}`)
+    api.put(`/updateUser/${userId}`, { email: e.target.email.value, profilePic })  
       .then((response) => {
-        console.log('Dados do usuário:', response.data);
+        console.log('Dados atualizados:', response.data);
+        setEditing(false); 
       })
       .catch((error) => {
-        console.error('Erro ao buscar os dados do usuário:', error);
+        console.error('Erro ao atualizar os dados do usuário:', error);
       });
-  };
-
-  const userLogged = localStorage.getItem('Yt');
-  const handleEditProfile = () => {
-    setEditing(true);
   };
 
   const handleFileChange = (e) => {
@@ -48,10 +41,14 @@ const Header = () => {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setProfilePic(reader.result);
+        setProfilePic(reader.result);  
       };
       reader.readAsDataURL(file);
     }
+  };
+
+  const handleEditProfile = () => {
+    setEditing(true);
   };
 
   return (
@@ -61,13 +58,10 @@ const Header = () => {
       </Logo>
       <Menu>
         <ul>
-          {!userLogged ? (
+          {!localStorage.getItem('Yt') ? (
             <li><Link to='/login'><span>Cadastro/Login</span></Link></li>
           ) : (
             <>
-              {/* <ProfileIcon onClick={() => setShowModal(!showModal)}> 
-                <img src={userProfile.profilePic} />
-              </ProfileIcon> */}
               <Avatar
                 onClick={() => setShowModal(!showModal)}
                 alt="Avatar"
@@ -79,52 +73,38 @@ const Header = () => {
                 <ModalContainer onClick={() => setShowModal(false)}>
                   <ModalContent onClick={(e) => e.stopPropagation()}>
                     {editing ? (
-                      // <form onSubmit={handleSubmit}>
-                      //   <h3>Editar Perfil</h3>
-                      //   <input 
-                      //     type="file" 
-                      //     accept="image/*" 
-                      //     onChange={handleFileChange}
-                      //   />
-
-                      //   <Avatar alt={userProfile.name} src={profilePic} sx={{ width: 50, height: 50 }}/>
-                      //   <input type="email" defaultValue={userProfile.email} placeholder="E-mail" />
-                      //   <input type="password" placeholder="Nova Senha" /> 
-                      //   <button type="submit">Salvar</button> 
-                      //   <button type="button" onClick={() => setEditing(false)}>Cancelar</button> 
-                      // </form>
                       <form onSubmit={handleSubmit}>
                         <h3>Editar Perfil</h3>
-
-                        {/* Avatar clicável p/ nova img */}
+                        
+                        {/* Avatar clicável para alterar a imagem */}
                         <div onClick={() => document.getElementById('fileInput').click()}>
                           <Avatar alt={userProfile.name} src={profilePic} sx={{ width: 50, height: 50, cursor: 'pointer' }} />
                         </div>
 
-                        {/* olcutar input file */}
                         <input
                           id="fileInput"
                           type="file"
                           accept="image/*"
                           onChange={handleFileChange}
-                          style={{ display: 'none' }} 
+                          style={{ display: 'none' }}  
                         />
 
-                        <input type="email" defaultValue={userProfile.email} placeholder="E-mail" />
-                        <input type="password" placeholder="Nova Senha" />
+                        <input type="email" name="email" defaultValue={userProfile.email} placeholder="E-mail" />
+                        <input type="password" name="password" placeholder="Nova Senha" />  
+
                         <button type="submit">Salvar</button>
                         <button type="button" onClick={() => setEditing(false)}>Cancelar</button>
                       </form>
                     ) : (
                       <>
                         <Avatar alt={userProfile.name} src={userProfile.profilePic} sx={{ width: 50, height: 50 }} />
-                        <h3>{userProfile.name}</h3>
-                        <p>{userProfile.email}</p>
+                        <h3>{userProfile.name}</h3>  
+                        <p>{userProfile.email}</p>  
 
                         <Link to="/mensagens">Mensagens</Link>
                         <Link to="/anuncios">Anúncios</Link>
 
-                        <button onClick={handleEditProfile}>Editar Perfil</button>
+                        <button onClick={handleEditProfile} style={{ marginRight: "10px" }}>Editar Perfil</button>  
                         <button onClick={handleLogout}>Logout</button>
                       </>
                     )}
