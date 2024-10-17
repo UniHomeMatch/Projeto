@@ -130,21 +130,77 @@ const Header = () => {
       </Logo>
       <Menu>
         <ul>
-          {!userLogged ?
-            <li><Link to='/login'
-            style={{
-              color:'black',
-            }}
-            >
-            <span>Cadastro/Login</span></Link></li>
-            :
-            <li><Link 
-            onClick={handleLogooff}
-            style={{
-              color:'black',
-            }}
-            ><span>Sair</span></Link></li>
-          }
+          {!localStorage.getItem('Yt') ? (
+            <li><Link to='/login'><span>Cadastro/Login</span></Link></li>
+          ) : (
+            <>
+              <Avatar
+                onClick={() => setShowModal(!showModal)}
+                alt="Avatar"
+                src={userProfile.profilePic}
+                sx={{ width: 50, height: 50 }}
+              />
+
+              {showModal && (
+                <ModalContainer onClick={() => setShowModal(false)}>
+                  <ModalContent onClick={(e) => e.stopPropagation()}>
+                    {editing ? (
+                      <form onSubmit={handleSubmit}>
+                        <h3>Editar Perfil</h3>
+                        
+                        {/* Avatar clicável para alterar a imagem */}
+                        <div onClick={() => document.getElementById('fileInput').click()}>
+                          <Avatar alt={userProfile.name} src={profilePic} sx={{ width: 50, height: 50, cursor: 'pointer' }} />
+                        </div>
+
+                        <input
+                          id="fileInput"
+                          type="file"
+                          accept="image/*"
+                          onChange={handleFileChange}
+                          style={{ display: 'none' }}  
+                        />
+
+                        <input type="text" name="name" defaultValue={userProfile.name} placeholder="Nome" />
+                        <input type="email" name="email" defaultValue={userProfile.email} placeholder="E-mail" />
+
+                        {/* Campo de senha e confirmação */}
+                        <input
+                          type="password"
+                          name="password"
+                          placeholder="Nova Senha"
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
+                        />
+                        <input
+                          type="password"
+                          name="confirmPassword"
+                          placeholder="Confirme a Nova Senha"
+                          value={confirmPassword}
+                          onChange={(e) => setConfirmPassword(e.target.value)}
+                        />
+
+                        <button type="submit">Salvar</button>
+                        <button type="button" onClick={() => setEditing(false)}>Cancelar</button>
+                      </form>
+                    ) : (
+                      <>
+                        <Avatar alt={userProfile.name} src={userProfile.profilePic} sx={{ width: 50, height: 50 }} />
+                        <h3>{userProfile.name}</h3>  
+                        <p>{userProfile.email}</p>  
+
+                        <Link to="/mensagens">Mensagens</Link>
+                        <Link to="/cadastro-imovel">Anúncios</Link>
+
+                        <button onClick={handleEditProfile} style={{ marginRight: "10px" }}>Editar Perfil</button>  
+                        <button onClick={handleLogout}>Logout</button>
+                      </>
+                    )}
+                  </ModalContent>
+                </ModalContainer>
+              )}
+            </>
+          )}
         </ul>
       </Menu>
     </Container>
@@ -152,3 +208,4 @@ const Header = () => {
 };
 
 export default Header;
+  
