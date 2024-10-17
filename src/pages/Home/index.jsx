@@ -12,13 +12,13 @@ const Home = () => {
 
     useEffect(() => {
         api.get('/listimobi')
-        .then((response) => {
-            setImobi(response.data)
-        })
-        .catch(() => {
-            console.log('Erro ao buscar os imóveis')
-        })
-    }, [])
+            .then((response) => {
+                setImobi(Array.isArray(response.data) ? response.data : []);
+            })
+            .catch(() => {
+                console.log('Erro ao buscar os imóveis');
+            });
+    }, []);
 
     return (
         <Fragment>

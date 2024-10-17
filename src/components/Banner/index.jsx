@@ -3,7 +3,7 @@ import { Container, Text } from "./styles";
 import { Button } from "@mui/material";
 
 const Banner = ( ) => {
-    return (
+    return ( 
         <Container>
            <Text>
             <h2>Descubra o Encanto da Sua Próxima Moradia</h2>
