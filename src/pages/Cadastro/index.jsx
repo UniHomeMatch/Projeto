@@ -36,6 +36,7 @@ const Cadastro = () => {
           toast('Preencha todos os campos!');
         } else if (!response.data.error === true) {
           toast(response.data.message);
+          navigate('/login');
         } else {
           toast(response.data.message);
         }
@@ -46,7 +47,6 @@ const Cadastro = () => {
         }
       })
 
-      navigate('/login'); 
   };
 
   return (
