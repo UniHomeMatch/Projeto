@@ -14,7 +14,7 @@ const Header = () => {
 
   const [showModal, setShowModal] = useState(false);
   const [editing, setEditing] = useState(false);
-  const [profilePic, setProfilePic] = useState(userProfile.profilePic);
+  const [profile, setProfile] = useState('');
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
@@ -44,7 +44,7 @@ const Header = () => {
         email: userData.email || "Email não informado",
         profilePic: userData.profile || ""
       });
-      setProfilePic(userData.profile || "");
+      setProfile(userData.profile || "");
     })
     .catch((error) => {
       console.error('Erro ao buscar os dados do usuário:', error.response ? error.response.data : error.message);
@@ -70,6 +70,7 @@ const Header = () => {
   
     const updatedName = e.target.name.value;  // Pegando o valor do nome
     const updatedEmail = e.target.email.value;
+    const updateProfile = e.target.profile.files[0];  // Pegando a imagem para atualizar o profilePic
   
     // Verificação de senhas antes de enviar para a API
     if (password && password !== confirmPassword) {
@@ -82,7 +83,7 @@ const Header = () => {
       {
         name: updatedName,
         email: updatedEmail,
-        profilePic,
+        profile: updateProfile,
         password,  // Enviando a nova senha (se estiver presente)
         confirmPassword  // Confirmando a senha
       },
@@ -100,7 +101,7 @@ const Header = () => {
       setUserProfile({
         name: updatedName,
         email: updatedEmail,
-        profilePic
+        profile
       });
     })
     .catch((error) => {
@@ -113,7 +114,7 @@ const Header = () => {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setProfilePic(reader.result);  
+        setProfile(reader.result);  
       };
       reader.readAsDataURL(file);
     }
@@ -150,14 +151,14 @@ const Header = () => {
                         
                         {/* Avatar clicável para alterar a imagem */}
                         <div onClick={() => document.getElementById('fileInput').click()}>
-                          <Avatar alt={userProfile.name} src={profilePic} sx={{ width: 50, height: 50, cursor: 'pointer' }} />
+                          <Avatar alt={userProfile.name} src={profile} sx={{ width: 50, height: 50, cursor: 'pointer' }} />
                         </div>
 
                         <input
                           id="fileInput"
                           type="file"
                           accept="image/*"
-                          onChange={handleFileChange}
+                          onChange={(e) => setProfile(e.target.files[0])}
                           style={{ display: 'none' }}  
                         />
 

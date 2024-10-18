@@ -16,7 +16,7 @@ const Footer = () => {
                         <li><span><FaInstagram size={32} /></span></li>
                         <li><span><FaWhatsapp size={32} /></span></li>
                         <a href="https:/unifil.br/" >
-                        <img class="unifil" src={LogoUnifil} alt="logo unifil"/>
+                        <img className="unifil" src={LogoUnifil} alt="logo unifil"/>
                         </a>
                     </nav>
                 </Item>
