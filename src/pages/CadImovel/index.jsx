@@ -57,6 +57,31 @@ function CadImovel() {
 
     const InputValue = (e) => setGenero(e.target.value);
 
+    const checkCep = (cepValue) => {
+        const cleanedCep = cepValue.replace(/\D/g, '');
+        if (cleanedCep.length === 8) {
+            fetch(`https://viacep.com.br/ws/${cleanedCep}/json/`)
+                .then((res) => res.json())
+                .then((data) => {
+                    if (!data.erro) {
+                        setLogradouro(data.logradouro);
+                        setCidade(data.localidade);
+                        setUf(data.uf);
+                        setBairro(data.bairro);
+                        setNumero(data.numero);
+                    } else {
+                        toast.error("CEP não encontrado.");
+                    }
+                })
+                .catch((error) => {
+                    console.error("Erro ao buscar o CEP:", error);
+                    toast.error("Erro ao buscar o CEP.");
+                });
+        } else {
+            toast.error("CEP inválido.");
+        }
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         
@@ -214,12 +239,14 @@ function CadImovel() {
                             name="cep"
                             placeholder="Informe o CEP"
                             onChange={(e) => setCep(e.target.value)}
+                            onBlur={() => checkCep(cep)}
                         />
                         <Label>Logradouro:</Label>
                         <Input
                             type="text"
                             name="logradouro"
                             placeholder="Informe o logradouro"
+                            value={logradouro}
                             onChange={(e) => setLogradouro(e.target.value)}
                         />
                         <Label>Número:</Label>
@@ -227,6 +254,7 @@ function CadImovel() {
                             type="text"
                             name="numero"
                             placeholder="Informe o número"
+                            value={numero}
                             onChange={(e) => setNumero(e.target.value)}
                         />
                         <Label>Bairro:</Label>
@@ -234,6 +262,7 @@ function CadImovel() {
                             type="text"
                             name="bairro"
                             placeholder="Informe o bairro"
+                            value={bairro}
                             onChange={(e) => setBairro(e.target.value)}
                         />
                         <Label>Complemento:</Label>
@@ -248,6 +277,7 @@ function CadImovel() {
                             type="text"
                             name="cidade"
                             placeholder="Informe a cidade"
+                            value={cidade}
                             onChange={(e) => setCidade(e.target.value)}
                         />
                         <Label>Estado:</Label>
@@ -255,6 +285,7 @@ function CadImovel() {
                             type="text"
                             name="uf"
                             placeholder="Informe o estado"
+                            value={uf}
                             onChange={(e) => setUf(e.target.value)}
                         />
                     </Section>
@@ -286,7 +317,7 @@ function CadImovel() {
                         />
                     </Section>
 
-                    <Button type="submit">Cadastrar</Button>
+                    <Button type="submit">Cadastrar Imóvel</Button>
                 </Form>
             </Right>
         </Container>
