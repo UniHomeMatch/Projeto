@@ -32,19 +32,4 @@ export const Text = styled.div`
         color: var(--white);
         margin-bottom: 25px;
     }
-    span{
-        background-color: var(--orangelight);
-        border: 0;
-        color: var(--darkgray);
-        font-size: 15px;
-        font-weight: 700;
-        padding: 12px 120px;
-        line-height: 24px;
-        border-radius: 4px;
-        cursor: pointer;
-
-        a{
-        color: var(--white);
-        }
-    }
 `   

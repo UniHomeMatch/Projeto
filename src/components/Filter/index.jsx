@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container } from './styles';
 import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 import Slider from '@mui/material/Slider';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
@@ -8,11 +9,13 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
+import { useMediaQuery, useTheme } from '@mui/material';
 
 function valuetext(value) {
     return `${value}`;
 }
 
+// Preço
 export function PriceSlider() {
     const [value, setValue] = useState([500, 3000]);
 
@@ -21,7 +24,7 @@ export function PriceSlider() {
     };
 
     return (
-        <Box sx={{ width: 200, padding: 1 }}>
+        <Box sx={{ width: '100%', padding: 1 }}>
             <Slider
                 getAriaLabel={() => 'Price range'}
                 value={value}
@@ -42,6 +45,7 @@ export function PriceSlider() {
     );
 }
 
+// Área
 export function AreaSlider() {
     const [value, setValue] = useState([67, 310]);
 
@@ -50,7 +54,7 @@ export function AreaSlider() {
     };
 
     return (
-        <Box sx={{ width: 200, padding: 1 }}>
+        <Box sx={{ width: '100%', padding: 1 }}>
             <Slider
                 getAriaLabel={() => 'Area range'}
                 value={value}
@@ -71,6 +75,7 @@ export function AreaSlider() {
     );
 }
 
+// Seleção de Cidade e Estado
 export function CitySelect() {
     const [cities, setCities] = useState([]);
     const [inputValue, setInputValue] = useState('');
@@ -94,29 +99,16 @@ export function CitySelect() {
     }, []);
 
     return (
-        <Box sx={{
-            width: 200,
-            padding: 1,
-            '&:hover .MuiOutlinedInput-notchedOutline': {
-                borderColor: '#FF7A00',
-            },
-            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                borderColor: '#FF7A00',
-            },
-        }}>            <Autocomplete
+        <Box sx={{ width: '100%', padding: 1 }}>
+            <Autocomplete
                 disablePortal
                 options={cities}
                 onInputChange={(event, newInputValue) => {
                     setInputValue(newInputValue);
                 }}
                 inputValue={inputValue}
-                sx={{ width: 200 }}
+                sx={{ width: '100%' }}
                 getOptionLabel={(option) => option.label}
-                filterOptions={(options, { inputValue }) => {
-                    return options.filter((option) =>
-                        option.label.toLowerCase().includes(inputValue.toLowerCase())
-                    );
-                }}
                 renderInput={(params) => (
                     <TextField {...params} label="Cidade" color='warning' />
                 )}
@@ -148,16 +140,7 @@ export function StateSelect() {
     }, []);
 
     return (
-        <Box sx={{
-            width: 200,
-            padding: 1,
-            '&:hover .MuiOutlinedInput-notchedOutline': {
-                borderColor: '#FF7A00',
-            },
-            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                borderColor: '#FF7A00',
-            },
-        }}>
+        <Box sx={{ width: '100%', padding: 1 }}>
             <Autocomplete
                 disablePortal
                 options={states}
@@ -165,13 +148,8 @@ export function StateSelect() {
                     setInputValue(newInputValue);
                 }}
                 inputValue={inputValue}
-                sx={{ width: 200 }}
+                sx={{ width: '100%' }}
                 getOptionLabel={(option) => option.label}
-                filterOptions={(options, { inputValue }) => {
-                    return options.filter((option) =>
-                        option.label.toLowerCase().includes(inputValue.toLowerCase())
-                    );
-                }}
                 renderInput={(params) => (
                     <TextField {...params} label="Estado (UF)" color='warning' />
                 )}
@@ -180,6 +158,7 @@ export function StateSelect() {
     );
 }
 
+// Seleção de Gênero
 export function SelectGenero() {
     const [genero, setGenero] = useState('');
 
@@ -188,7 +167,7 @@ export function SelectGenero() {
     };
 
     return (
-        <FormControl sx={{ m: 1, minWidth: 200 }}>
+        <FormControl sx={{ m: 1, minWidth: '100%' }}>
             <InputLabel
                 id="genero-select"
                 sx={{
@@ -223,6 +202,7 @@ export function SelectGenero() {
     );
 }
 
+// Entrada de Banheiros e Quartos
 export function InputBanheiros() {
     return (
         <TextField
@@ -230,7 +210,7 @@ export function InputBanheiros() {
             label="Banheiros"
             type="number"
             sx={{
-                width: 200,
+                width: '100%',
                 margin: 1,
                 '& .MuiOutlinedInput-root': {
                     '&:hover fieldset': {
@@ -257,7 +237,7 @@ export function InputQuartos() {
             label="Quartos"
             type="number"
             sx={{
-                width: 200,
+                width: '100%',
                 margin: 1,
                 '& .MuiOutlinedInput-root': {
                     '&:hover fieldset': {
@@ -277,45 +257,65 @@ export function InputQuartos() {
     );
 }
 
-
+// Componente principal adaptado
 export const Filter = () => {
+    const theme = useTheme();
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
     return (
         <Box
-        sx={{
-            position: 'sticky',
-            top: 0,
-            left: 0,
-            width: '250px',
-            height: '100vh',
-            boxShadow: '2px 0px 8px rgba(0, 0, 0, 0.1)',
-            zIndex: 1000,
-            borderRight: '1px solid #ddd',
-            borderRadius: '25px',
-        }}
-    >
-        <Container>
-            <p>Preferência de gênero</p>
-            <SelectGenero />
+            sx={{
+                position: 'sticky',
+                top: 0,
+                left: 0,
+                width: isSmallScreen ? '100%' : '250px',
+                height: '100vh',
+                boxShadow: '2px 0px 8px rgba(0, 0, 0, 0.1)',
+                zIndex: 1000,
+                borderRight: '1px solid #ddd',
+                borderRadius: '25px',
+                padding: 2,
+                overflowY: 'auto',
+            }}
+        >
+            <Container>
+                <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                        <p>Preferência de gênero</p>
+                        <SelectGenero />
+                    </Grid>
 
-            <p>Preço</p>
-            <PriceSlider />
+                    <Grid item xs={12}>
+                        <p>Preço</p>
+                        <PriceSlider />
+                    </Grid>
 
-            <p>Área</p>
-            <AreaSlider />
+                    <Grid item xs={12}>
+                        <p>Área</p>
+                        <AreaSlider />
+                    </Grid>
 
-            <p>Estado</p>
-            <StateSelect />
+                    <Grid item xs={12}>
+                        <p>Estado</p>
+                        <StateSelect />
+                    </Grid>
 
-            <p>Cidade</p>
-            <CitySelect />
+                    <Grid item xs={12}>
+                        <p>Cidade</p>
+                        <CitySelect />
+                    </Grid>
 
-            <p>Quantidade de quartos</p>
-            <InputQuartos />
+                    <Grid item xs={12}>
+                        <p>Quantidade de quartos</p>
+                        <InputQuartos />
+                    </Grid>
 
-            <p>Quantidade de banheiros</p>
-            <InputBanheiros />
-
-        </Container>
+                    <Grid item xs={12}>
+                        <p>Quantidade de banheiros</p>
+                        <InputBanheiros />
+                    </Grid>
+                </Grid>
+            </Container>
         </Box>
     );
-};
+}

@@ -24,7 +24,7 @@ const Cadastro = () => {
 
   const InputValue = (e) => setData({ ...data, [e.target.name]: e.target.value });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e) => { 
     e.preventDefault();
     api.post('/createusers', data)
 
