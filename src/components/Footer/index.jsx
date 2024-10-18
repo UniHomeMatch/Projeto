@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import { Container, Copy, Item } from "./styles";
 import { FaFacebook, FaInstagram, FaWhatsapp } from "react-icons/fa";
 import LogoImg from '../../assets/logo.png';
+import LogoUnifil from '../../assets/unifil.png';
 
 const Footer = () => {
     return (
@@ -9,11 +10,14 @@ const Footer = () => {
             <Container>
                 <Item>
                     <img src={LogoImg} alt="" />
-                    <p>Projeto de extensão da Universidade Filadélfia de Londrina - UNIFIL, desenvolvido por alunos de Ciência da Computação e Engenharia de Software.</p>
+                    <p>Projeto de extensão do Centro Universitário Filadélfia de Londrina - UNIFIL, desenvolvido por alunos de Ciência da Computação e Engenharia de Software.</p>
                     <nav>
                         <li><span><FaFacebook size={32} /></span></li>
                         <li><span><FaInstagram size={32} /></span></li>
                         <li><span><FaWhatsapp size={32} /></span></li>
+                        <a href="https:/unifil.br/" >
+                        <img class="unifil" src={LogoUnifil} alt="logo unifil"/>
+                        </a>
                     </nav>
                 </Item>
                 <Item>

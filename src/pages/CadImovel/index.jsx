@@ -78,7 +78,7 @@ function CadImovel() {
     };
 
     useEffect(() => {
-        api.get('/listimobi')
+        api.get(`/listimobi`)
             .then((response) => setImobi(response.data))
             .catch(() => console.log('Erro ao buscar os imóveis'));
     }, []);
