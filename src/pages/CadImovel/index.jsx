@@ -9,10 +9,9 @@ import { useContext } from 'react';
 import { AppContext } from '../../context/AppContext';
 
 function CadImovel() {
-debugger;
     const { user } = useContext(AppContext); // Obtém o usuário logado
     const userId = user ? user.id : null; // Isso agora deve funcionar
-
+console.log('aaaa', user)
     const [thumb, setThumb] = useState('');
     const [images, setImages] = useState([]);
     const [predio, setPredio] = useState('');
@@ -87,7 +86,7 @@ debugger;
         formData.append('generoId', generoId);
         formData.append('userId', userId);
 
-
+console.log('AAAAAA', userId)
         api.post('/createimobi', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
