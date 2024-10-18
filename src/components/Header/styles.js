@@ -57,6 +57,7 @@ export const ModalContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: flex-start;
+  z-index: 1000; 
 `;
 
 export const ModalContent = styled.div`
@@ -67,8 +68,9 @@ export const ModalContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: transform 0.3s ease-in-out; 
-
+  transition: transform 0.3s ease-in-out;
+  z-index: 1001; 
+  
   &.editing {
     transform: translateX(-50px);
   }
@@ -123,4 +125,4 @@ export const ModalContent = styled.div`
       width: 100%;
     }
   }
-`
+`;
