@@ -70,6 +70,15 @@ export const Section = styled.div`
   }
 `;
 
+export const Message = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background-color: #ffff;
+`;
+
 export const Label = styled.label`
   font-size: 1em;
   font-weight: 500;

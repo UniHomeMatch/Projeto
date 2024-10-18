@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Container, Form, Label, Right, Section, Mask, ContainerCard, Img, Description, Itens } from "./Styles";
-import Input from "../../components/Input"; 
+import { Container, Form, Label, Right, Section, Mask, ContainerCard, Img, Description, Itens, Message } from "./Styles";
+import Input from "../../components/Input";
 import api, { urlApi } from "../../services/Api";
 import { toast } from "react-toastify";
 import Button from "../../components/Button";
@@ -9,8 +9,9 @@ import { Wrapper } from "../../pages/CadImovel/Styles";
 import { Div } from "../../pages/CadImovel/Styles";
 import { FaArrowRight, FaMapMarkerAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { GetLocalStorage } from "../../context/utils";
 
-export function Card({ thumb, title, location, price, slug}){
+export function Card({ thumb, title, location, price, slug }) {
     return (
         <ContainerCard>
             <Img>
@@ -27,8 +28,6 @@ export function Card({ thumb, title, location, price, slug}){
         </ContainerCard>
     )
 }
-
-
 
 function CadImovel() {
     const [imobi, setImobi] = useState([]);
@@ -51,30 +50,41 @@ function CadImovel() {
     const [phone, setPhone] = useState('');
     const [email, setEmail] = useState('');
     const [generoId, setGenero] = useState('');
+    const [message, setMessage] = useState([]);
 
-    // Função corrigida para setar apenas o valor de generoId
+    const user = GetLocalStorage();
+    const { id } = user;
+
     const InputValue = (e) => setGenero(e.target.value);
 
-    const data = {
-        thumb,
-        images,
-        predio,
-        description,
-        price,
-        cep,
-        logradouro,
-        numero,
-        bairro,
-        complemento,
-        cidade,
-        uf,
-        area,
-        bedrooms,
-        bathrooms,
-        name,
-        phone,
-        email,
-        generoId,
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        
+        const data = new FormData(); // Use FormData para enviar arquivos
+        data.append('thumb', thumb);
+        data.append('images', images);
+        data.append('predio', predio);
+        data.append('description', description);
+        data.append('price', price);
+        data.append('cep', cep);
+        data.append('logradouro', logradouro);
+        data.append('numero', numero);
+        data.append('bairro', bairro);
+        data.append('complemento', complemento);
+        data.append('cidade', cidade);
+        data.append('uf', uf);
+        data.append('area', area);
+        data.append('bedrooms', bedrooms);
+        data.append('bathrooms', bathrooms);
+        data.append('name', name);
+        data.append('phone', phone);
+        data.append('email', email);
+        data.append('generoId', generoId);
+        data.append('userId', id); // Incluindo o userId aqui
+
+        api.post('/createimobi', data)
+            .then((response) => toast(response.data.message))
+            .catch((error) => console.log(error.response.data.message));
     };
 
     useEffect(() => {
@@ -83,35 +93,39 @@ function CadImovel() {
             .catch(() => console.log('Erro ao buscar os imóveis'));
     }, []);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const headers = {
-            headers: {
-                'content-type': 'multipart/form-data',
-            },
-        };
-
-        api.post('/createimobi', data, headers)
-            .then((response) => toast(response.data.message))
-            .catch((error) => console.log(error.response.data.message));
-    };
+    useEffect(() => {
+        api.get(`/listmessage/${id}`)
+            .then((response) => {
+                setMessage(response.data.messagem);
+            })
+            .catch(() => {
+                console.log("Erro: Erro ao listar mensagens")
+            });
+    }, []);
 
     return (
         <Container>
             <Div>
-            Cadastre seu ánuncio agora!
-            <Wrapper>
-                {imobi.map((item) => (
-                    <Card 
-                        key={item.id} 
-                        thumb={item.thumb}
-                        title={item.title}
-                        location={item.location}
-                        price={item.price}
-                        slug={item.slug} 
-                    />
+                {message && message.length > 0 && message.map((item, index) => (
+                    <Message key={index}>
+                        <span>Nome: {item.client_name}</span>
+                        <span>Email: {item.client_email}</span>
+                        <p>{item.client_mensagem}</p>
+                    </Message>
                 ))}
-            </Wrapper>
+
+                <Wrapper>
+                    {imobi.map((item) => (
+                        <Card
+                            key={item.id}
+                            thumb={item.thumb}
+                            title={item.title}
+                            location={item.location}
+                            price={item.price}
+                            slug={item.slug}
+                        />
+                    ))}
+                </Wrapper>
             </Div>
             <Right>
                 <Form onSubmit={handleSubmit} autoComplete="off">
@@ -130,7 +144,7 @@ function CadImovel() {
                             type="file"
                             multiple
                             name="images"
-                            onChange={(e) => setImages(e.target.files[0])}
+                            onChange={(e) => setImages(e.target.files)}
                         />
                     </Section>
 
@@ -182,11 +196,11 @@ function CadImovel() {
                         />
                         <Label>Gênero de Preferência:</Label>
                         <div>
-                        <RadioGroup name="generoId" onChange={InputValue} required style={{ marginBottom: 10 }}>
-                            <FormControlLabel value="1" control={<Radio />} label="Masculino" />
-                            <FormControlLabel value="2" control={<Radio />} label="Feminino" />
-                            <FormControlLabel value="3" control={<Radio />} label="Todos" />
-                        </RadioGroup>
+                            <RadioGroup name="generoId" onChange={InputValue} required style={{ marginBottom: 10 }}>
+                                <FormControlLabel value="1" control={<Radio />} label="Masculino" />
+                                <FormControlLabel value="2" control={<Radio />} label="Feminino" />
+                                <FormControlLabel value="3" control={<Radio />} label="Todos" />
+                            </RadioGroup>
                         </div>
                     </Section>
 
@@ -236,18 +250,18 @@ function CadImovel() {
                             placeholder="Informe a cidade"
                             onChange={(e) => setCidade(e.target.value)}
                         />
-                        <Label>UF:</Label>
+                        <Label>Estado:</Label>
                         <Input
                             type="text"
                             name="uf"
-                            placeholder="Informe o UF"
+                            placeholder="Informe o estado"
                             onChange={(e) => setUf(e.target.value)}
                         />
                     </Section>
 
-                    {/* Seção de Proprietário */}
+                    {/* Seção de Contato */}
                     <Section>
-                        <h3>Proprietário</h3>
+                        <h3>Contato</h3>
                         <Label>Nome:</Label>
                         <Input
                             type="text"
@@ -260,19 +274,19 @@ function CadImovel() {
                             mask={"(99) 99999-9999"}
                             type="text"
                             name="phone"
-                            placeholder="Informe o telefone de contato"
+                            placeholder="Informe seu telefone"
                             onChange={(e) => setPhone(e.target.value)}
                         />
-                        <Label>E-mail:</Label>
+                        <Label>Email:</Label>
                         <Input
-                            type="text"
+                            type="email"
                             name="email"
-                            placeholder="Informe o E-mail para contato"
+                            placeholder="Informe seu email"
                             onChange={(e) => setEmail(e.target.value)}
                         />
                     </Section>
 
-                    <Button type="submit">Cadastrar imóvel</Button>
+                    <Button type="submit">Cadastrar</Button>
                 </Form>
             </Right>
         </Container>
