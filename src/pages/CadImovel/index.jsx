@@ -116,18 +116,17 @@ function CadImovel() {
         api.get(`/listimobi`)
             .then((response) => setImobi(response.data))
             .catch(() => console.log('Erro ao buscar os imóveis'));
-    }, []);
-
+    }, []); // This one doesn't need id, so no changes needed
+    
     useEffect(() => {
         api.get(`/listmessage/${id}`)
             .then((response) => {
                 setMessage(response.data.messagem);
             })
             .catch(() => {
-                console.log("Erro: Erro ao listar mensagens")
+                console.log("Erro: Erro ao listar mensagens");
             });
-    }, []);
-
+    }, [id]);
     return (
         <Container>
             <Div>

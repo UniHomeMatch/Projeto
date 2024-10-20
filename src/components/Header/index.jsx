@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import LogoImg from "../../assets/logo.png";
-import { Container, Logo, Menu, ProfileIcon, ModalContainer, ModalContent } from "./styles";
+import { Container, Logo, Menu, ModalContainer, ModalContent } from "./styles";
 import api from '../../services/Api';
 import Avatar from '@mui/material/Avatar';
 
@@ -9,7 +9,7 @@ const Header = () => {
   const [userProfile, setUserProfile] = useState({
     name: "Nome do usuário",  
     email: "Email não informado",
-    profilePic: ""
+    profileImg: ""
   });
 
   const [showModal, setShowModal] = useState(false);
@@ -42,7 +42,7 @@ const Header = () => {
       setUserProfile({
         name: userData.name || "Nome do usuário",  
         email: userData.email || "Email não informado",
-        profilePic: userData.profile || ""
+        profileImg: userData.profile || ""
       });
       setProfile(userData.profile || "");
     })
@@ -68,9 +68,9 @@ const Header = () => {
     const userId = ytData.id;
     const token = ytData.token;
   
-    const updatedName = e.target.name.value;  // Pegando o valor do nome
+    const updatedName = e.target.name.value;
     const updatedEmail = e.target.email.value;
-    const updateProfile = e.target.profile.files[0];  // Pegando a imagem para atualizar o profilePic
+    const updateProfile = e.target.profile.files[0];
   
     // Verificação de senhas antes de enviar para a API
     if (password && password !== confirmPassword) {
@@ -78,21 +78,23 @@ const Header = () => {
       return;
     }
   
-    // Fazendo a requisição PUT para atualizar o usuário
-    api.put(`/updateusers/${userId}`, 
-      {
-        name: updatedName,
-        email: updatedEmail,
-        profile: updateProfile,
-        password,  // Enviando a nova senha (se estiver presente)
-        confirmPassword  // Confirmando a senha
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`  
-        }
+    // Usar FormData para upload de arquivo
+    const formData = new FormData();
+    formData.append('name', updatedName);
+    formData.append('email', updatedEmail);
+    formData.append('password', password);
+    formData.append('confirmPassword', confirmPassword);
+    
+    if (updateProfile) {
+      formData.append('profile', updateProfile);
+    }
+  
+    api.put(`/updateusers/${userId}`, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'multipart/form-data'  // Definindo cabeçalho para envio de arquivos
       }
-    )
+    })
     .then((response) => {
       console.log('Dados atualizados com sucesso:', response.data);
       setEditing(false);
@@ -101,7 +103,7 @@ const Header = () => {
       setUserProfile({
         name: updatedName,
         email: updatedEmail,
-        profile
+        profile: updateProfile ? URL.createObjectURL(updateProfile) : profile
       });
     })
     .catch((error) => {
@@ -109,16 +111,7 @@ const Header = () => {
     });
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setProfile(reader.result);  
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+ 
 
   const handleEditProfile = () => {
     setEditing(true);
@@ -138,7 +131,7 @@ const Header = () => {
               <Avatar
                 onClick={() => setShowModal(!showModal)}
                 alt="Avatar"
-                src={userProfile.profilePic}
+                src={userProfile.profileImg}
                 sx={{ width: 50, height: 50 }}
               />
 
@@ -186,7 +179,7 @@ const Header = () => {
                       </form>
                     ) : (
                       <>
-                        <Avatar alt={userProfile.name} src={userProfile.profilePic} sx={{ width: 50, height: 50 }} />
+                        <Avatar alt={userProfile.name} src={userProfile.profileImg} sx={{ width: 50, height: 50 }} />
                         <h3>{userProfile.name}</h3>  
                         <p>{userProfile.email}</p>  
 

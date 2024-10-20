@@ -3,7 +3,7 @@ import { useState } from "react";
 import { createContext } from "react";
 import { toast } from "react-toastify";
 import api from "../services/Api";
-import { GetLocalStorage, SetLocalStorage } from "./utils";
+import { SetLocalStorage } from "./utils";
 
 export const AppContext = createContext({});
 debugger;
