@@ -7,7 +7,7 @@ import Avatar from '@mui/material/Avatar';
 
 const Header = () => {
   const [userProfile, setUserProfile] = useState({
-    name: "Nome do usuário",  
+    name: "Nome do usuário",
     email: "Email não informado",
     profileImg: ""
   });
@@ -20,15 +20,21 @@ const Header = () => {
 
   // Função para buscar os dados do usuário
   useEffect(() => {
-    const ytData = JSON.parse(localStorage.getItem('Yt'));
-
-    if (!ytData || !ytData.id || !ytData.token) {
-      console.error("Usuário não encontrado ou token ausente.");
+    const ytData = localStorage.getItem('Yt');
+  
+    if (!ytData) {
+      console.error("Dados do usuário não encontrados no localStorage.");
       return;
     }
 
-    const userId = ytData.id;
-    const token = ytData.token;
+    const parsedData = JSON.parse(ytData);
+
+    if (!parsedData.id || !parsedData.token) {
+      console.error("Usuário não encontrado ou token ausente.");
+    }
+
+    const userId = parsedData.id;
+    const token = parsedData.token;
 
     // Fazendo a requisição GET para obter os dados do usuário pelo ID
     api.get(`/listusers/${userId}`, {
@@ -36,19 +42,23 @@ const Header = () => {
         Authorization: `Bearer ${token}`  // Enviando o token no cabeçalho
       }
     })
-    .then((response) => {
-      // Atualizando o estado com os dados recebidos
-      const userData = response.data;
-      setUserProfile({
-        name: userData.name || "Nome do usuário",  
-        email: userData.email || "Email não informado",
-        profileImg: userData.profile || ""
+      .then((response) => {
+        const userData = response.data;
+        if (userData.name && userData.email) {
+          // Atualizando o estado com os dados recebidos
+          setUserProfile({
+            name: userData.name || "Nome do usuário",
+            email: userData.email || "Email não informado",
+            profileImg: userData.profile || ""
+          });
+          setProfile(userData.profile || "");
+        } else {
+          console.error("Dados de usuário não encontrados na resposta.");
+        }
+      })
+      .catch((error) => {
+        console.error('Erro ao buscar os dados do usuário:', error.response ? error.response.data : error.message);
       });
-      setProfile(userData.profile || "");
-    })
-    .catch((error) => {
-      console.error('Erro ao buscar os dados do usuário:', error.response ? error.response.data : error.message);
-    });
   }, []);
 
   const handleLogout = () => {
@@ -59,59 +69,54 @@ const Header = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const ytData = JSON.parse(localStorage.getItem('Yt'));
-  
+
     if (!ytData || !ytData.id || !ytData.token) {
       console.error("Usuário não encontrado ou token ausente.");
       return;
     }
-  
+
     const userId = ytData.id;
     const token = ytData.token;
-  
+
     const updatedName = e.target.name.value;
     const updatedEmail = e.target.email.value;
     const updateProfile = e.target.profile.files[0];
-  
-    // Verificação de senhas antes de enviar para a API
+
     if (password && password !== confirmPassword) {
       alert("As senhas não coincidem!");
       return;
     }
-  
-    // Usar FormData para upload de arquivo
+
     const formData = new FormData();
     formData.append('name', updatedName);
     formData.append('email', updatedEmail);
     formData.append('password', password);
     formData.append('confirmPassword', confirmPassword);
-    
+
     if (updateProfile) {
       formData.append('profile', updateProfile);
     }
-  
+
     api.put(`/updateusers/${userId}`, formData, {
       headers: {
         Authorization: `Bearer ${token}`,
-        'Content-Type': 'multipart/form-data'  // Definindo cabeçalho para envio de arquivos
+        'Content-Type': 'multipart/form-data'
       }
     })
-    .then((response) => {
-      console.log('Dados atualizados com sucesso:', response.data);
-      setEditing(false);
-  
-      // Atualize o estado com os novos dados do usuário
-      setUserProfile({
-        name: updatedName,
-        email: updatedEmail,
-        profile: updateProfile ? URL.createObjectURL(updateProfile) : profile
-      });
-    })
-    .catch((error) => {
-      console.error('Erro ao atualizar os dados do usuário:', error.response ? error.response.data : error.message);
-    });
-  };
+      .then((response) => {
+        console.log('Dados atualizados com sucesso:', response.data);
+        setEditing(false);
 
- 
+        setUserProfile({
+          name: updatedName,
+          email: updatedEmail,
+          profile: updateProfile ? URL.createObjectURL(updateProfile) : profile
+        });
+      })
+      .catch((error) => {
+        console.error('Erro ao atualizar os dados do usuário:', error.response ? error.response.data : error.message);
+      });
+  };
 
   const handleEditProfile = () => {
     setEditing(true);
@@ -141,8 +146,7 @@ const Header = () => {
                     {editing ? (
                       <form onSubmit={handleSubmit}>
                         <h3>Editar Perfil</h3>
-                        
-                        {/* Avatar clicável para alterar a imagem */}
+
                         <div onClick={() => document.getElementById('fileInput').click()}>
                           <Avatar alt={userProfile.name} src={profile} sx={{ width: 50, height: 50, cursor: 'pointer' }} />
                         </div>
@@ -152,13 +156,12 @@ const Header = () => {
                           type="file"
                           accept="image/*"
                           onChange={(e) => setProfile(e.target.files[0])}
-                          style={{ display: 'none' }}  
+                          style={{ display: 'none' }}
                         />
 
                         <input type="text" name="name" defaultValue={userProfile.name} placeholder="Nome" />
                         <input type="email" name="email" defaultValue={userProfile.email} placeholder="E-mail" />
 
-                        {/* Campo de senha e confirmação */}
                         <input
                           type="password"
                           name="password"
@@ -180,13 +183,13 @@ const Header = () => {
                     ) : (
                       <>
                         <Avatar alt={userProfile.name} src={userProfile.profileImg} sx={{ width: 50, height: 50 }} />
-                        <h3>{userProfile.name}</h3>  
-                        <p>{userProfile.email}</p>  
+                        <h3>{userProfile.name}</h3>
+                        <p>{userProfile.email}</p>
 
                         <Link to="/mensagens">Mensagens</Link>
                         <Link to="/cadastro-imovel">Anúncios</Link>
 
-                        <button onClick={handleEditProfile} style={{ marginRight: "10px" }}>Editar Perfil</button>  
+                        <button onClick={handleEditProfile} style={{ marginRight: "10px" }}>Editar Perfil</button>
                         <button onClick={handleLogout}>Logout</button>
                       </>
                     )}
@@ -202,4 +205,3 @@ const Header = () => {
 };
 
 export default Header;
-  

@@ -6,7 +6,6 @@ import api from "../services/Api";
 import { SetLocalStorage } from "./utils";
 
 export const AppContext = createContext({});
-debugger;
 export const AppContextProvider = ({ children }) => {
   const [user, setUser] = useState();
 
