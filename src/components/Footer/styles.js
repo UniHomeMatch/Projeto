@@ -33,6 +33,11 @@ export const Item = styled.div`
             }
         }
     }
+        img.unifil{
+        width: auto;
+        height: 32px;
+        margin-left: 2px;
+        }
 `
 
 export const Copy = styled.div`

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@emotion/react": "^11.13.0",
+    "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@mui/material": "^5.16.7",
     "@mui/styled-engine-sc": "^6.0.0-alpha.18",
@@ -13,6 +13,8 @@
     "@vercel/speed-insights": "^1.0.12",
     "axios": "^1.7.3",
     "components": "^0.1.0",
+    "cors": "^2.8.5",
+    "express": "^4.21.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-google-recaptcha": "^3.1.0",
@@ -25,7 +27,8 @@
     "styled": "^1.0.0",
     "styled-components": "^6.1.12",
     "uni-homematch": "file:",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "ws": "^8.18.0"
   },
   "scripts": {
     "start": "react-scripts start",

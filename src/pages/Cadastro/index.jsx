@@ -24,7 +24,7 @@ const Cadastro = () => {
 
   const InputValue = (e) => setData({ ...data, [e.target.name]: e.target.value });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e) => { 
     e.preventDefault();
     api.post('/createusers', data)
 
@@ -36,6 +36,7 @@ const Cadastro = () => {
           toast('Preencha todos os campos!');
         } else if (!response.data.error === true) {
           toast(response.data.message);
+          navigate('/login');
         } else {
           toast(response.data.message);
         }
@@ -46,7 +47,6 @@ const Cadastro = () => {
         }
       })
 
-      navigate('/login'); 
   };
 
   return (
