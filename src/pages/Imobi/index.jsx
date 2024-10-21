@@ -57,17 +57,17 @@ const Imobi = () => {
     const [client_mensagem, setClientMensagem] = useState('');
     const [client_telefone, setClientTelefone] = useState('');
 
-    const dataMessage = {
-        client_name,
-        client_email,
-        client_mensagem,
-        client_telefone,
-        userId
-    }
-
     const handleSubmit = (e) => {
         e.preventDefault();
-        api.post('/createmessage', dataMessage)
+        const messageData = {
+            client_name,
+            client_email,
+            client_mensagem,
+            client_telefone,
+            userId, // Certifique-se de que o userId esteja sendo corretamente definido.
+        };
+
+        api.post('/createmessage', messageData)
             .then((response) => {
                 toast(response.data.message);
             })
@@ -118,7 +118,6 @@ const Imobi = () => {
                     <ProfileFormContact>
                         <h3>Envie uma mensagem</h3>
                         <form onSubmit={handleSubmit} autoComplete='off'>
-                            <Input type="hidden" name='userId' value={userId} />
                             <Input type="text" placeholder='Nome' name='client_name' onChange={(e) => setClientName(e.target.value)} />
                             <Input type="text" placeholder='Email' name='client_email' onChange={(e) => setClientEmail(e.target.value)} />
                             <Input type="text" placeholder='Telefone' name='client_telefone' onChange={(e) => setClientTelefone(e.target.value)} />
