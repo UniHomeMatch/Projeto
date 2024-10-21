@@ -9837,7 +9837,7 @@ undici-types@~5.26.4:
   version "0.1.0"
   resolved "file:"
   dependencies:
-    "@emotion/react" "^11.13.0"
+    "@emotion/react" "^11.13.3"
     "@emotion/styled" "^11.13.0"
     "@mui/material" "^5.16.7"
     "@mui/styled-engine-sc" "^6.0.0-alpha.18"
