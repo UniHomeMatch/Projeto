@@ -97,7 +97,6 @@ const Imobi = () => {
                         </ProfileImg>
                         <ProfileDescription>
                             <h3>{name}</h3>
-                            <p>descrição</p>
                         </ProfileDescription>
                     </Profile>
                     <ProfileContact>
