@@ -79,8 +79,8 @@ const Imobi = () => {
                         <span><IoBedSharp /> {bedrooms}</span>
                         <span><FaBath /> {bathrooms}</span>
                         <span><ImEnlarge /> {area} m²</span>
-                        <h5><FaMapLocationDot />{logradouro}, {numero} - {complemento}</h5>
-                        <h3><FaMapMarkerAlt /> {bairro}, {cidade}, {uf}</h3>
+                        <h4><FaMapLocationDot /> {logradouro}, {numero} - {complemento}</h4>
+                        <h4><FaMapMarkerAlt /> {bairro}, {cidade} - {uf}</h4>
                         <p>{description}</p>
                     </Description>
                 </Left>
