@@ -28,7 +28,7 @@ const Imobi = () => {
     }, [slug]);
 
     const {
-        title,
+        predio,
         description,
         thumb,
         price,
@@ -76,7 +76,7 @@ const Imobi = () => {
             <TopBanner thumb={thumb} />
             <Container>
                 <Left>
-                    <h2>{title}</h2>
+                    <h2>{predio}</h2>
                     <Thumb>
                         <img src={`${urlApi}/uploads/${thumb}`} alt="Imóvel" />
                     </Thumb>
