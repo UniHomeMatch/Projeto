@@ -3,33 +3,34 @@ import { useState } from "react";
 import { createContext } from "react";
 import { toast } from "react-toastify";
 import api from "../services/Api";
-import { SetLocalStorage } from "./utils";
+import { GetLocalStorage, SetLocalStorage } from "./utils";
 
 export const AppContext = createContext({});
+
 export const AppContextProvider = ({ children }) => {
   const [user, setUser] = useState();
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('Yt');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser)); // Parse para objeto
-      console.log('Usuário logado', JSON.parse(storedUser));
+    const user = localStorage.getItem('Yt');
+    if (user) {
+      setUser(user);
+      console.log('Usuário logado', user);
     }
   }, []);
 
-  function authenticate(email, password) {
+  async function authenticate(email, password) {
     api.post('/session', { email, password })
       .then((response) => {
         if (!response.data.erro === true) {
-          toast(response.data.message);
+          toast(response.data.message)
         }
-        const { id, email } = response.data.user; // Desestruturação
-        const payload = { token: response.data.token, email, id };
+        const id = response.data.user.id;
+        const email = response.data.user.email;
+        const payload = { token: response.data.token, email, id }
         setUser(payload);
-        SetLocalStorage(JSON.stringify(payload)); // Armazenar como string JSON
-        window.location.href = "/cadastro-imovel";
-      })
-      .catch(() => {
+        SetLocalStorage(payload);
+        window.location.href = "/cadastro-imovel"
+      }).catch(() => {
         console.log('Erro: App Error');
       });
   }
@@ -40,8 +41,8 @@ export const AppContextProvider = ({ children }) => {
   }
 
   return (
-    <AppContext.Provider value={{ user, authenticate, logout }}>
+    <AppContext.Provider value={{ ...user, authenticate, logout }}>
       {children}
     </AppContext.Provider>
-  );
+  )
 }
