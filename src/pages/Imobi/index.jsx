@@ -15,61 +15,55 @@ import { FaMapLocationDot } from 'react-icons/fa6';
 const Imobi = () => {
     const { slug } = useParams();
     const [dataImobi, setDataImobi] = useState({});
-
-    useEffect(() => {
-        api.get(`/listimobi/${slug}`)
-            .then((response) => {
-                console.log(response.data); 
-                setDataImobi(response.data);
-            })
-            .catch(() => {
-                console.log("Erro: Erro ao listar imóvel");
-            });
-    }, [slug]);
-
-    const {
-        predio,
-        description,
-        thumb,
-        price,
-        logradouro, 
-        numero,
-        area,
-        bedrooms,
-        bathrooms,
-        name,
-        phone,
-        email,
-        userId
-    } = dataImobi;
-
     const [client_name, setClientName] = useState('');
     const [client_email, setClientEmail] = useState('');
     const [client_mensagem, setClientMensagem] = useState('');
     const [client_telefone, setClientTelefone] = useState('');
 
-    const dataMessage = {
-        client_name,
-        client_email,
-        client_mensagem,
-        client_telefone,
-        userId
-    }
+    // Função assíncrona para buscar os dados do imóvel
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await api.get(`/listimobi/${slug}`);
+                setDataImobi(response.data);
+            } catch (error) {
+                console.log("Erro: Erro ao listar imóvel");
+            }
+        };
+        fetchData();
+    }, [slug]);
 
+    // Validação e envio da mensagem
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (!client_name || !client_email || !client_mensagem || !client_telefone) {
+            toast.error('Preencha todos os campos!');
+            return;
+        }
+
+        const dataMessage = {
+            client_name,
+            client_email,
+            client_mensagem,
+            client_telefone,
+            userId: dataImobi.userId
+        };
+
         api.post('/createmessage', dataMessage)
             .then((response) => {
-                toast(response.data.message);
+                toast.success(response.data.message);
             })
             .catch(() => {
-                console.log('Erro: Erro no sistema');
+                toast.error('Erro no sistema');
             });
-    }
+    };
 
-    if (!dataImobi) {
+    // Verificação para exibir "Carregando..." enquanto os dados não foram carregados
+    if (Object.keys(dataImobi).length === 0) {
         return <div>Carregando...</div>;
     }
+
+    const { predio, description, thumb, price, logradouro, numero, area, bedrooms, bathrooms, name, phone, email, userId } = dataImobi;
 
     return (
         <Fragment>
@@ -81,11 +75,11 @@ const Imobi = () => {
                         <img src={`${urlApi}/uploads/${thumb}`} alt="Imóvel" />
                     </Thumb>
                     <Description>
-                        <h2>{price}</h2>
-                        <span><IoBedSharp />{bedrooms}</span>
+                        <h2>R$ {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(price)}</h2>
+                        <span><IoBedSharp /> {bedrooms}</span>
                         <span><FaBath /> {bathrooms}</span>
-                        <span><ImEnlarge />{area}</span>
-                        <h5><FaMapLocationDot />{logradouro}, {numero}</h5>
+                        <span><ImEnlarge /> {area} m²</span>
+                        <h5><FaMapLocationDot /> {logradouro}, {numero}</h5>
                         <p>{description}</p>
                     </Description>
                 </Left>
@@ -107,22 +101,18 @@ const Imobi = () => {
                     <ProfileFormContact>
                         <h3>Envie uma mensagem</h3>
                         <form onSubmit={handleSubmit} autoComplete='off'>
-                            <Input type="hidden" name='userId' value={userId} />
+                            <Input type="hidden" name='userId' value={userId || ''} />
                             <Input type="text" placeholder='Nome' name='client_name' onChange={(e) => setClientName(e.target.value)} />
-                            <Input type="text" placeholder='Email' name='client_email' onChange={(e) => setClientEmail(e.target.value)} />
-                            <Input type="text" placeholder='Telefone' name='client_telefone' onChange={(e) => setClientTelefone(e.target.value)} />
+                            <Input type="email" placeholder='Email' name='client_email' onChange={(e) => setClientEmail(e.target.value)} />
+                            <Input type="tel" placeholder='Telefone' name='client_telefone' onChange={(e) => setClientTelefone(e.target.value)} />
                             <TextArea name='client_mensagem' cols="30" rows="10" placeholder='Mensagem' onChange={(e) => setClientMensagem(e.target.value)} />
                             <Button>Enviar Mensagem</Button>
                         </form>
                     </ProfileFormContact>
-                    <MapImg>
-                        <h3><FaMapMarkerAlt /> Localização</h3>
-                        <img src="https://media.istockphoto.com/id/1306807452/pt/vetorial/map-city-vector-illustration.jpg?s=2048x2048&w=is&k=20&c=e7J0DzlKVhJ6fpy2IqB7KE4yr2Dxg8cLBHe8F9_W3L8=" alt="Mapa" />
-                    </MapImg>
                 </Right>
             </Container>
         </Fragment>
-    )
-}
+    );
+};
 
 export default Imobi;

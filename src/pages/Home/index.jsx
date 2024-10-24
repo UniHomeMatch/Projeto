@@ -38,8 +38,8 @@ const Home = () => {
                 {imobi.map((items) => (
                     <Card key={items.id} 
                     thumb={items.thumb}
-                    title={items.title}
-                    location={items.location}
+                    predio={items.predio}
+                    logradouro={items.logradouro + " - " + items.numero}
                     price={items.price}
                     slug={items.slug} />
                 ))}
