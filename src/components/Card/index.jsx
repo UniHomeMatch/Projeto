@@ -4,7 +4,7 @@ import { FaArrowRight, FaMapMarkerAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { urlApi } from "../../services/Api";
 
-const Card = ({ thumb, predio, location, price, slug }) => {
+const Card = ({ thumb, predio, logradouro, price, slug }) => {
     return (
         <Container>
       <Img>
@@ -13,7 +13,7 @@ const Card = ({ thumb, predio, location, price, slug }) => {
       <Description>
         <h4>{predio}</h4>
         <Itens>
-          <span><FaMapMarkerAlt />{location}</span>
+          <span><FaMapMarkerAlt />{logradouro}</span>
           <span>R$ {price} / mês</span>
         </Itens>
         <Link to={`/imovel/${slug}`}>Detalhes <FaArrowRight /></Link>
