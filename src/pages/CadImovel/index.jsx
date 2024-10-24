@@ -10,16 +10,16 @@ import { FaArrowRight, FaMapMarkerAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { GetLocalStorage } from "../../context/utils";
 
-export function Card({ thumb, title, location, price, slug }) {
+export function Card({ thumb, predio, logradouro, price, slug }) {
     return (
         <ContainerCard>
             <Img>
                 <img src={`${urlApi}/uploads/${thumb}`} alt="" />
             </Img>
             <Description>
-                <h4>{title}</h4>
+                <h4>{predio}</h4>
                 <Itens>
-                    <span><FaMapMarkerAlt />{location}</span>
+                    <span><FaMapMarkerAlt />{logradouro}</span>
                     <span>R$ {price} / mês</span>
                 </Itens>
                 <Link to={`/imovel/${slug}`}>Detalhes <FaArrowRight /></Link>
