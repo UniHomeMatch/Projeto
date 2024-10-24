@@ -38,7 +38,7 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <ReCAPTCHA
-            sitekey="6LduWGEqAAAAAJy_OukHrUgLV8D6Jgnm6ylP9KdU"
+            sitekey="6LfgB2sqAAAAAGnoMFAcnM9PDCyeWmdiN8XU--5V"
             onChange={(value) => setRecaptcha(value)}
             size="normal"
             theme="clear"
