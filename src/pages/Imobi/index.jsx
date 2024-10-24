@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import { Container, Description, Left, MapImg, Profile, ProfileContact, ProfileDescription, ProfileFormContact, ProfileImg, Right, Thumb } from './styles';
+import { Container, Description, Left, MapImg, Mask, Profile, ProfileContact, ProfileDescription, ProfileFormContact, ProfileImg, Right, Thumb } from './styles';
 import TopBanner from '../../components/TopBanner';
 import { IoBedSharp } from 'react-icons/io5';
 import { FaBath, FaMapMarkerAlt } from 'react-icons/fa';
@@ -105,7 +105,7 @@ const Imobi = () => {
                             <Input type="hidden" name='userId' value={userId || ''} />
                             <Input type="text" placeholder='Nome' name='client_name' onChange={(e) => setClientName(e.target.value)} />
                             <Input type="email" placeholder='Email' name='client_email' onChange={(e) => setClientEmail(e.target.value)} />
-                            <Input type="tel" placeholder='Telefone' name='client_telefone' onChange={(e) => setClientTelefone(e.target.value)} />
+                            <Mask mask={"(99) 99999-9999"} type="tel" placeholder='Telefone' name='client_telefone' onChange={(e) => setClientTelefone(e.target.value)} />
                             <TextArea name='client_mensagem' cols="30" rows="10" placeholder='Mensagem' onChange={(e) => setClientMensagem(e.target.value)} />
                             <Button>Enviar Mensagem</Button>
                         </form>

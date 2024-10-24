@@ -1,3 +1,4 @@
+import ReactInputMask from "react-input-mask";
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -14,6 +15,21 @@ export const Left = styled.div`
         margin-bottom: 10px;
     }
 `
+
+export const Mask = styled(ReactInputMask)`
+    height: 50px;
+    padding: 8px 15px;
+    border-radius: 5px;
+    width: 100%;
+    color: var(--secondary);
+    letter-spacing: 1px;
+    font-size: 15px;
+    margin-bottom: 10px;
+    outline: none;
+    border-color: var(--gray);
+    border: 1px solid var(--gray);
+    resize: none;
+`;
 
 export const Thumb = styled.div`
     position: relative;
@@ -66,6 +82,7 @@ export const Right = styled.div`
 
 export const Profile = styled.div`
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
 `
 

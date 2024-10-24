@@ -281,7 +281,8 @@ function CadImovel() {
                             onChange={(e) => setCidade(e.target.value)}
                         />
                         <Label>Estado:</Label>
-                        <Input
+                        <Mask
+                            mask={"AA"}
                             type="text"
                             name="uf"
                             placeholder="Informe o estado"
