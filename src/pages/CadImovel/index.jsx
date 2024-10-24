@@ -4,7 +4,6 @@ import Input from "../../components/Input";
 import api, { urlApi } from "../../services/Api";
 import { toast } from "react-toastify";
 import Button from "../../components/Button";
-import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import { Wrapper } from "../../pages/CadImovel/Styles";
 import { Div } from "../../pages/CadImovel/Styles";
 import { FaArrowRight, FaMapMarkerAlt } from "react-icons/fa";
@@ -215,13 +214,7 @@ function CadImovel() {
                             onChange={(e) => setBathrooms(e.target.value)}
                         />
                         <Label>Gênero de Preferência:</Label>
-                        <div>
-                            <RadioGroup name="generoId" onChange={InputValue} required style={{ marginBottom: 10 }}>
-                                <FormControlLabel value="1" control={<Radio />} label="Masculino" />
-                                <FormControlLabel value="2" control={<Radio />} label="Feminino" />
-                                <FormControlLabel value="3" control={<Radio />} label="Todos" />
-                            </RadioGroup>
-                        </div>
+                        
                     </Section>
 
                     {/* Seção de Endereço */}
