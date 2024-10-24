@@ -47,14 +47,11 @@ function CadImovel() {
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const [email, setEmail] = useState('');
-    const [generoId, setGenero] = useState('');
     const [message, setMessage] = useState([]);
 
     const user = GetLocalStorage();
-    const { id } = user;
-
-    const InputValue = (e) => setGenero(e.target.value);
-
+    const userId = user.id;
+    
     const checkCep = (cepValue) => {
         const cleanedCep = cepValue.replace(/\D/g, '');
         if (cleanedCep.length === 8) {
@@ -80,19 +77,19 @@ function CadImovel() {
         }
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        
-        const data = new FormData(); // Usando FormData para enviar arquivos
+    const handleSubmit = async (e) => {
+
+        // Recupera o userId do localStorage
+        const data = new FormData();
         data.append('thumb', thumb);
         data.append('predio', predio);
         data.append('description', description);
         data.append('price', price);
         data.append('cep', cep);
         data.append('logradouro', logradouro);
-        data.append('numero', numero);
-        data.append('bairro', bairro);
         data.append('complemento', complemento);
+        data.append('bairro', bairro);
+        data.append('numero', numero);
         data.append('cidade', cidade);
         data.append('uf', uf);
         data.append('area', area);
@@ -101,34 +98,50 @@ function CadImovel() {
         data.append('name', name);
         data.append('phone', phone);
         data.append('email', email);
-        data.append('generoId', generoId);
-        data.append('userId', id); // Incluindo o userId
-    
-        api.post('/createimobi', data)
-            .then((_response) => {
-                toast.success('Imóvel cadastrado com sucesso!'); 
-            })
-            .catch((error) => {
-                toast.error('Erro ao cadastrar o imóvel.'); 
-                console.log(error.response.data.message);
-            });
+        data.append('userId', userId); // Adiciona o userId aqui
+
+        try {
+            const response = await api.post('/createimobi', data);
+            toast.success('Imóvel cadastrado com sucesso!');
+
+            setThumb('');
+            setPredio('');
+            setDescription('');
+            setPrice('');
+            setCep('');
+            setLogradouro('');
+            setNumero('');
+            setBairro('');
+            setComplemento('');
+            setCidade('');
+            setUf('');
+            setArea('');
+            setBedrooms('');
+            setBathrooms('');
+            setName('');
+            setPhone('');
+            setEmail('');
+        } catch (error) {
+            toast.error('Erro ao cadastrar o imóvel.');
+            console.log(error.response?.data?.message || error);
+        }
     };
 
     useEffect(() => {
         api.get(`/listimobi`)
             .then((response) => setImobi(response.data))
             .catch(() => console.log('Erro ao buscar os imóveis'));
-    }, []); 
-    
+    }, []);
+
     useEffect(() => {
-        api.get(`/listmessage/${id}`)
+        api.get(`/listmessage/${userId}`)
             .then((response) => {
                 setMessage(response.data.messagem);
             })
             .catch(() => {
                 console.log("Erro: Erro ao listar mensagens");
             });
-    }, [id]);
+    }, [userId]);
     return (
         <Container>
             <Div>
@@ -213,8 +226,7 @@ function CadImovel() {
                             placeholder="Informe a quantidade de banheiros"
                             onChange={(e) => setBathrooms(e.target.value)}
                         />
-                        <Label>Gênero de Preferência:</Label>
-                        
+
                     </Section>
 
                     {/* Seção de Endereço */}
