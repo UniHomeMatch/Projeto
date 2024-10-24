@@ -4,7 +4,6 @@ import TopBanner from '../../components/TopBanner';
 import { IoBedSharp } from 'react-icons/io5';
 import { FaBath, FaMapMarkerAlt } from 'react-icons/fa';
 import { ImEnlarge } from 'react-icons/im';
-import ImageRoll from '../../components/Roll';
 import Input from '../../components/Input';
 import TextArea from '../../components/TextArea';
 import Button from '../../components/Button';

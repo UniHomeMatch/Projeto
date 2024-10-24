@@ -32,7 +32,6 @@ export function Card({ thumb, title, location, price, slug }) {
 function CadImovel() {
     const [imobi, setImobi] = useState([]);
     const [thumb, setThumb] = useState('');
-    const [images, setImages] = useState('');
     const [predio, setPredio] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
@@ -85,9 +84,8 @@ function CadImovel() {
     const handleSubmit = (e) => {
         e.preventDefault();
         
-        const data = new FormData(); // Use FormData para enviar arquivos
+        const data = new FormData(); // Usando FormData para enviar arquivos
         data.append('thumb', thumb);
-        data.append('images', images);
         data.append('predio', predio);
         data.append('description', description);
         data.append('price', price);
@@ -105,18 +103,23 @@ function CadImovel() {
         data.append('phone', phone);
         data.append('email', email);
         data.append('generoId', generoId);
-        data.append('userId', id); // Incluindo o userId aqui
-
+        data.append('userId', id); // Incluindo o userId
+    
         api.post('/createimobi', data)
-            .then((response) => toast(response.data.message))
-            .catch((error) => console.log(error.response.data.message));
+            .then((_response) => {
+                toast.success('Imóvel cadastrado com sucesso!'); 
+            })
+            .catch((error) => {
+                toast.error('Erro ao cadastrar o imóvel.'); 
+                console.log(error.response.data.message);
+            });
     };
 
     useEffect(() => {
         api.get(`/listimobi`)
             .then((response) => setImobi(response.data))
             .catch(() => console.log('Erro ao buscar os imóveis'));
-    }, []); // This one doesn't need id, so no changes needed
+    }, []); 
     
     useEffect(() => {
         api.get(`/listmessage/${id}`)
@@ -162,13 +165,6 @@ function CadImovel() {
                             type="file"
                             name="thumb"
                             onChange={(e) => setThumb(e.target.files[0])}
-                        />
-                        <Label>Fotos do Apartamento:</Label>
-                        <Input
-                            type="file"
-                            multiple
-                            name="images"
-                            onChange={(e) => setImages(e.target.files)}
                         />
                     </Section>
 
