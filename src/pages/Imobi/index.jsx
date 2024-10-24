@@ -63,7 +63,7 @@ const Imobi = () => {
         return <div>Carregando...</div>;
     }
 
-    const { predio, description, thumb, price, logradouro, numero, area, bedrooms, bathrooms, name, phone, email, userId } = dataImobi;
+    const { predio, description, thumb, price, logradouro, numero, complemento, bairro, cidade, uf, area, bedrooms, bathrooms, name, phone, email, userId } = dataImobi;
 
     return (
         <Fragment>
@@ -79,7 +79,8 @@ const Imobi = () => {
                         <span><IoBedSharp /> {bedrooms}</span>
                         <span><FaBath /> {bathrooms}</span>
                         <span><ImEnlarge /> {area} m²</span>
-                        <h5><FaMapLocationDot /> {logradouro}, {numero}</h5>
+                        <h5><FaMapLocationDot />{logradouro}, {numero}, " - ", {complemento}</h5>
+                        <h3><FaMapMarkerAlt /> {bairro}, ", ", {cidade}, ", ", {uf}</h3>
                         <p>{description}</p>
                     </Description>
                 </Left>
