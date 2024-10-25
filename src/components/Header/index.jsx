@@ -14,11 +14,10 @@ const Header = () => {
 
   const [showModal, setShowModal] = useState(false);
   const [editing, setEditing] = useState(false);
-  const [profile, setProfile] = useState('');
+  const [profile, setProfile] = useState(null);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  // Função para buscar os dados do usuário
   useEffect(() => {
     const ytData = JSON.parse(localStorage.getItem('Yt'));
 
@@ -30,14 +29,12 @@ const Header = () => {
     const userId = ytData.id;
     const token = ytData.token;
 
-    // Fazendo a requisição GET para obter os dados do usuário pelo ID
     api.get(`/listusers/${userId}`, {
       headers: {
-        Authorization: `Bearer ${token}`  // Enviando o token no cabeçalho
+        Authorization: `Bearer ${token}`
       }
     })
     .then((response) => {
-      // Atualizando o estado com os dados recebidos
       const userData = response.data;
       setUserProfile({
         name: userData.name || "Nome do usuário",  
@@ -58,6 +55,7 @@ const Header = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     const ytData = JSON.parse(localStorage.getItem('Yt'));
   
     if (!ytData || !ytData.id || !ytData.token) {
@@ -68,55 +66,61 @@ const Header = () => {
     const userId = ytData.id;
     const token = ytData.token;
   
-    const updatedName = e.target.name.value;  // Pegando o valor do nome
+    const updatedName = e.target.name.value;
     const updatedEmail = e.target.email.value;
-    const updateProfile = e.target.profile.files[0];  // Pegando a imagem para atualizar o profilePic
   
-    // Verificação de senhas antes de enviar para a API
     if (password && password !== confirmPassword) {
       alert("As senhas não coincidem!");
       return;
     }
   
-    // Fazendo a requisição PUT para atualizar o usuário
+    let formData = new FormData();
+    formData.append('name', updatedName);
+    formData.append('email', updatedEmail);
+    if (password) {
+      formData.append('password', password);
+      formData.append('confirmPassword', confirmPassword);
+    }
+  
+    // Handle file upload
+    if (profile) {
+      formData.append('profile', profile);
+    }
+
     api.put(`/updateusers/${userId}`, 
-      {
-        name: updatedName,
-        email: updatedEmail,
-        profile: updateProfile,
-        password,  // Enviando a nova senha (se estiver presente)
-        confirmPassword  // Confirmando a senha
-      },
+      formData,
       {
         headers: {
-          Authorization: `Bearer ${token}`  
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data"
         }
       }
     )
     .then((response) => {
       console.log('Dados atualizados com sucesso:', response.data);
       setEditing(false);
-  
-      // Atualize o estado com os novos dados do usuário
+
       setUserProfile({
-        name: updatedName,
-        email: updatedEmail,
-        profile
+        name: response.data.name,
+        email: response.data.email,
+        profilePic: response.data.profile
       });
+
+      setShowModal(false);
     })
     .catch((error) => {
       console.error('Erro ao atualizar os dados do usuário:', error.response ? error.response.data : error.message);
+      // Check if the error is related to file upload
+      if (error.response?.data?.includes('Invalid file format')) {
+        alert('Por favor, selecione um arquivo de imagem válido.');
+      }
     });
   };
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setProfile(reader.result);  
-      };
-      reader.readAsDataURL(file);
+      setProfile(file);
     }
   };
 
@@ -149,16 +153,16 @@ const Header = () => {
                       <form onSubmit={handleSubmit}>
                         <h3>Editar Perfil</h3>
                         
-                        {/* Avatar clicável para alterar a imagem */}
                         <div onClick={() => document.getElementById('fileInput').click()}>
-                          <Avatar alt={userProfile.name} src={profile} sx={{ width: 50, height: 50, cursor: 'pointer' }} />
+                          <Avatar alt={userProfile.name} src={profile ? URL.createObjectURL(profile) : userProfile.profilePic} sx={{ width: 50, height: 50, cursor: 'pointer' }} />
                         </div>
 
                         <input
                           id="fileInput"
+                          name="profile"
                           type="file"
                           accept="image/*"
-                          onChange={(e) => setProfile(e.target.files[0])}
+                          onChange={handleFileChange}
                           style={{ display: 'none' }}  
                         />
 
