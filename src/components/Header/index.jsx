@@ -168,7 +168,7 @@ const Header = () => {
                           name="profileImg"
                           type="file"
                           accept="image/*"
-                          onChange={(e) => setProfile(e.target.files[0])}
+                          onChange={(e) => setProfileImg(e.target.files[0])}
                           style={{ display: 'none' }}
                         />
 
